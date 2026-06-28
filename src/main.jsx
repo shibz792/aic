@@ -94,7 +94,7 @@ const readinessSignals = [
 ]
 
 function getRoute() {
-  const slug = window.location.hash.replace('#/', '').replace('#', '') || 'home'
+  const slug = window.location.hash.replace('#/', '').replace('#', '').split('?')[0] || 'home'
   return meta[slug] ? slug : 'home'
 }
 
