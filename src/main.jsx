@@ -925,11 +925,15 @@ function InquiryModal({ open, initialSolution, onClose }) {
 
   useEffect(() => {
     if (!open) return undefined
+    document.body.classList.add('modal-open')
     const onKey = (event) => {
       if (event.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      document.body.classList.remove('modal-open')
+      window.removeEventListener('keydown', onKey)
+    }
   }, [open, onClose])
 
   const toggle = (name) => {
