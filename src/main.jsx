@@ -1,16 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
 
 const contactEmail = 'khalid@aicatlyst.com'
-const groupLine = 'A Knights Move Consulting Group Co.'
+const groupLine = 'A Knights Move Consulting Group Company'
 const assetPath = (path) => `${import.meta.env.BASE_URL}${path}`
+const logoSrc = assetPath('aicatlyst-logo-true.png')
+const heroImageSrc = assetPath('hero-image.png')
+const contactImageSrc = assetPath('contact-image.png')
+const strategyImageSrc = assetPath('strategy-image.png')
 
 const routes = [
   ['Home', 'home'],
   ['Strategy', 'strategy'],
   ['Solutions', 'solutions'],
-  ['Platform', 'platform'],
   ['Contact', 'contact'],
 ]
 
@@ -18,37 +21,34 @@ const meta = {
   home: {
     pageTitle: 'AI Catlyst | Home',
     eyebrow: 'A Knights Move Consulting Group Company',
-    title: 'Crisis-Proof Strategy. Exceptional Delivery. Exponential Bottom-Line Growth.',
+    title: 'Crisis-Proof Strategy. Exceptional Delivery. ',
+    accent: 'Exponential Bottom-Line Growth.',
     text: 'We focus entirely on the foundational health of your business first. By anchoring our solutions in immediate growth, structural efficiencies, and rapid ROI, we ensure next-gen AI implementation remains accessible and highly affordable for businesses of any size. When market crisis hits, our systems protect your capital.',
-    cta: 'Contact Our Experts to Transform Your Business Today',
+    cta: 'Talk to Our Experts',
   },
   strategy: {
     pageTitle: 'AI Catlyst | Strategy',
     eyebrow: 'Your Business Growth with AI',
-    title: 'Crisis-Proof, Future-Proof Application of AI for Optimal Results.',
+    title: 'Crisis-Proof, Future-Proof Application of AI for ',
+    accent: 'Optimal Results.',
     text: 'We analyze your business layout first, deploying AI to accelerate growth and manufacture rapid efficiencies.',
     cta: 'Architect the roadmap',
   },
   solutions: {
     pageTitle: 'AI Catlyst | Solutions',
     eyebrow: 'Immediate Growth & Efficiencies',
-    title: 'Scalable Intelligence to Drive Growth and Efficiencies. Subscribed!',
+    title: 'Practical AI Systems to Drive Growth and Efficiencies. ',
+    accent: 'Subscribed!',
     text: 'Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes.',
     cta: 'Explore solutions',
-  },
-  platform: {
-    pageTitle: 'AI Catlyst | Platform',
-    eyebrow: 'Workflow Architecture',
-    title: 'Interoperable systems architecture for legacy operations.',
-    text: 'Before we deploy any tech, we map out your manual resource drags and hidden cost leakages, then bridge your legacy databases with automated AI capabilities without interrupting daily operations.',
-    cta: 'Design the layer',
   },
   contact: {
     pageTitle: 'AI Catlyst | Contact',
     eyebrow: 'Contact Our Experts',
-    title: 'Connect with Our Experts Today to Bring the Value of AI to Your Business',
-    text: "No complex technical integration lists. No software confusion. Just direct, unshakeable growth and major cost-savings engineered by seasoned business specialists. Contact us now, and let's unlock real bottom-line efficiency together.",
-    cta: 'Contact Our Experts to Transform Your Business Today',
+    title: '',
+    accent: 'Take Action Today',
+    text: 'Speak with our experts and find out how we can simplify your operations, reduce pressure, and support smarter growth.',
+    cta: 'Talk to Our Experts',
   },
 }
 
@@ -60,42 +60,72 @@ const triad = [
 
 const advisory = [
   ['Business Assessment & AI Roadmap Architecture', 'We begin by deeply auditing your operations to locate immediate opportunities for growth and cost reduction. From there, our architects build a highly effective, capital-efficient deployment roadmap utilizing cutting-edge technology and tailored AI systems designed to deliver bottom-line value as quickly as possible.', 'End-to-End Operational Friction Report, Actionable AI Deployment Matrix, and Accelerated ROI Roadmap.'],
-  ['Workflow Architecture & Operational Audits', 'Before we deploy any tech, we map out your manual resource drags and hidden cost leakages. Our Solution Transformers design an interoperable systems architecture that bridges your legacy databases with automated AI capabilities without interrupting your daily operations.', 'Target Operating Model Design, Automated Workflow Schematics, and System Integration Protocols.'],
+  ['Workflow & Operational Audits', 'We map your manual resource drags and hidden cost leakages first. Our Solution Transformers then connect your legacy databases with automated AI capabilities, designing the secure AI layer around legacy systems without interrupting your daily operations.', 'Target Operating Model Design, Automated Workflow Schematics, and System Integration Protocols.'],
   ['Corporate AI Governance & Risk Frameworks', 'Ethical execution protects your downside during rapid scaling. We design robust corporate AI policies, data compliance guardrails, and risk mitigation frameworks tailored to your regulatory landscape. We ensure your proprietary enterprise data remains completely secure and fully compliant with emerging industry standards.', 'Custom Corporate AI Blueprint, Data Privacy & Security Guardrails, and Executive Compliance Sign-off.'],
 ]
 
 const solutions = [
-  ['AIC SalesGrow', 'SalesOS', 'Automated Sales Tracking & Lead Management', "Stops your sales team from wasting hours on manual CRM data entry. By securely connecting to your team's day-to-day communication stack, the system automatically reads incoming inquiries, creates customer profiles, scores lead interest, and instantly drafts tailored replies. It cuts down expensive software clutter and accelerates your pipeline without expanding headcount."],
-  ['AIC MediaGrow', 'MediaOS', 'Instant Marketing & Ad Creation', 'Replaces slow, high-cost marketing studio production with rapid, high-margin software processing power. Simply input a link to a high-performing industry benchmark, and the system forensically analyzes why it works, writing fresh scripts, generating realistic voiceovers, assembling video variations, and dropping production-ready drafts straight into your campaign ad manager instantly.'],
-  ['AIC WebModerniser', 'WebOS', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.'],
-  ['AIC QualLeads', 'LeadOS', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.'],
-  ['AIC Lead Magnet Linkedin', 'LinkedInOS', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.'],
-  ['AIC CommsGrow', 'CommsOS', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.'],
-  ['AIC FinMaster', 'finOS', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.'],
-  ['AIC Data Access', 'Data Hub', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching."],
+  ['AIC SalesGrow', 'SalesOS', 'Automated Sales Tracking & Lead Management', "Stops your sales team from wasting hours on manual CRM data entry. By securely connecting to your team's day-to-day communication stack, the system automatically reads incoming inquiries, creates customer profiles, scores lead interest, and instantly drafts tailored replies. It cuts down expensive software clutter and accelerates your pipeline without expanding headcount.", 'growth'],
+  ['AIC MediaGrow', 'MediaOS', 'Instant Marketing & Ad Creation', 'Replaces slow, high-cost marketing studio production with rapid, high-margin software processing power. Simply input a link to a high-performing industry benchmark, and the system forensically analyzes why it works, writing fresh scripts, generating realistic voiceovers, assembling video variations, and dropping production-ready drafts straight into your campaign ad manager instantly.', 'growth'],
+  ['AIC WebModerniser', 'WebOS', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
+  ['AIC QualLeads', 'LeadOS', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.', 'growth'],
+  ['AIC Lead Magnet Linkedin', 'LinkedInOS', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.', 'growth'],
+  ['AIC CommsGrow', 'CommsOS', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
+  ['AIC FinMaster', 'finOS', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
+  ['AIC Data Access', 'Data Hub', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
 ]
 
 const solutionIcons = ['pipeline', 'media', 'web', 'lead', 'linkedin', 'memory', 'finance', 'search']
 
 const journey = [
-  ['Audit', 'Locate growth opportunities, cash leakage, manual drag, and duplicated software spend.'],
+  ['Order', 'Locate growth opportunities, cash leakage, manual drag, and duplicated software spend.'],
   ['Architect', 'Build the AI operating layer around your current business knowledge, data, and teams.'],
   ['Deploy', 'Launch focused systems with integration support, governance, and measurable ROI signals.'],
   ['Compound', 'Turn every workflow improvement into reusable intelligence across sales, finance, operations, and leadership.'],
 ]
 
-const readinessSignals = [
-  'Immediate growth opportunities',
-  'Structural efficiencies',
-  'Rapid ROI roadmap',
-  'Risk mitigation framework',
-  'Legacy workflow integration',
-  'Secure data access planning',
-]
+function splitLead(text) {
+  const idx = text.indexOf('. ')
+  if (idx === -1) return [text, '']
+  return [text.slice(0, idx + 1), text.slice(idx + 2)]
+}
+
+function splitList(text) {
+  return text.replace(/\.$/, '').split(/,\s*(?:and\s+)?/).map((item) => item.trim()).filter(Boolean)
+}
 
 function getRoute() {
   const slug = window.location.hash.replace('#/', '').replace('#', '').split('?')[0] || 'home'
+  if (slug === 'platform') return 'strategy'
   return meta[slug] ? slug : 'home'
+}
+
+function useInView(threshold = 0.2) {
+  const ref = useRef(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return undefined
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true)
+        observer.disconnect()
+      }
+    }, { threshold })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [threshold])
+  return [ref, inView]
+}
+
+function Reveal({ children, delay = 0, as = 'div', className = '' }) {
+  const [ref, inView] = useInView()
+  const Tag = as
+  return (
+    <Tag ref={ref} className={`reveal ${inView ? 'in-view' : ''} ${className}`} style={{ '--delay': `${delay}s` }}>
+      {children}
+    </Tag>
+  )
 }
 
 function App() {
@@ -129,16 +159,11 @@ function App() {
 
   return (
     <div className="site-shell">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
-      <div className="matrix" />
-      <div className="data-streams" aria-hidden="true"><span /><span /><span /><span /></div>
       <Header active={route} menuOpen={menuOpen} setMenuOpen={setMenuOpen} openInquiry={openInquiry} />
       <main>
         {route === 'home' && <HomePage openInquiry={openInquiry} />}
         {route === 'strategy' && <StrategyPage openInquiry={openInquiry} />}
         {route === 'solutions' && <SolutionsPage openInquiry={openInquiry} />}
-        {route === 'platform' && <PlatformPage openInquiry={openInquiry} />}
         {route === 'contact' && <ContactPage openInquiry={openInquiry} />}
       </main>
       <Footer openInquiry={openInquiry} />
@@ -148,6 +173,15 @@ function App() {
 }
 
 function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const openMobileInquiry = () => {
     setMenuOpen(false)
     openInquiry()
@@ -155,9 +189,9 @@ function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
 
   return (
     <>
-      <header className="site-header">
-        <a className="brand" href="#/home" aria-label="AI Catlyst home">
-          <img src={assetPath('aicatlyst-long.png')} alt="AI Catlyst" />
+      <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
+        <a className={`brand ${active === 'home' ? 'brand-home' : ''}`} href="#/home" aria-label="AI Catlyst home">
+          <img src={logoSrc} alt="AI Catlyst" className="brand-mark" width="220" height="61" loading="eager" decoding="async" />
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {routes.map(([label, slug]) => <a key={slug} className={active === slug ? 'active' : ''} href={`#/${slug}`}>{label}</a>)}
@@ -176,7 +210,7 @@ function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
           <button className="menu-close" type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)}>×</button>
           <div className="mobile-logo">
-            <img src={assetPath('aicatlyst-long.png')} alt="AI Catlyst" />
+            <img src={logoSrc} alt="AI Catlyst" width="200" height="55" loading="lazy" decoding="async" />
           </div>
           {routes.map(([label, slug]) => <a key={slug} href={`#/${slug}`}>{label}</a>)}
           <button type="button" className="button primary" onClick={openMobileInquiry}>Contact experts</button>
@@ -189,8 +223,7 @@ function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
 function HomePage({ openInquiry }) {
   return (
     <>
-      <Hero route="home" visual={<GrowthEngine />} openInquiry={openInquiry} />
-      <MetricStrip />
+      <Hero route="home" visual={<HomeVisual />} openInquiry={openInquiry} />
       <Triad />
       <OperatingJourney />
       <SolutionsPreview openInquiry={openInquiry} />
@@ -203,10 +236,10 @@ function HomePage({ openInquiry }) {
 function StrategyPage({ openInquiry }) {
   return (
     <>
-      <Hero route="strategy" visual={<RoadmapVisual />} openInquiry={openInquiry} compact />
+      <Hero route="strategy" visual={<StrategyVisual />} openInquiry={openInquiry} compact />
       <section className="section strategy-advisory-section">
         <div className="wrapper">
-          <SectionHeader eyebrow="Core advisory offerings" title="Strategy before software." text="Premium, outcome-led corporate consulting focused on bottom-line results, fast deployment, and risk mitigation." />
+          <SectionHeader title="Strategy before software." text="Premium, outcome-led corporate consulting focused on bottom-line results, fast deployment, and risk mitigation." />
           <div className="advisory-grid">
             {advisory.map(([title, text, deliverable], index) => <AdvisoryCard key={title} title={title} text={text} deliverable={deliverable} index={index} />)}
           </div>
@@ -223,12 +256,10 @@ function SolutionsPage({ openInquiry }) {
   return (
     <>
       <Hero route="solutions" visual={<SystemsMap />} openInquiry={openInquiry} compact />
-      <section className="section solutions-section">
+      <section className="section solutions-section" id="solutions-groups">
         <div className="wrapper">
-          <SectionHeader eyebrow="The Core 8 Business Solutions" title="Plug-and-play business tools built to slash software overhead." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
-          <div className="solution-grid">
-            {solutions.map((item, index) => <SolutionCard key={item[0]} item={item} index={index} openInquiry={openInquiry} />)}
-          </div>
+          <SectionHeader title="Plug-and-play business tools built to slash software overhead." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
+          <SolutionsGroups openInquiry={openInquiry} />
         </div>
       </section>
       <SolutionSelector />
@@ -238,50 +269,44 @@ function SolutionsPage({ openInquiry }) {
   )
 }
 
-function PlatformPage({ openInquiry }) {
+function ContactPage({ openInquiry }) {
   return (
     <>
-      <Hero route="platform" visual={<PlatformVisual />} openInquiry={openInquiry} compact />
-      <section className="section platform-flow-section">
-        <div className="wrapper split">
-          <SectionHeader eyebrow="Operational architecture" title="Workflow Architecture & Operational Audits." text={advisory[1][1]} />
-          <FlowVisual />
-        </div>
-      </section>
-      <section className="section platform-governance-section">
-        <div className="wrapper split reverse">
-          <PlatformGovernanceVisual />
-          <SectionHeader eyebrow="Risk and governance" title="Corporate AI Governance & Risk Frameworks." text={advisory[2][1]} />
-        </div>
-      </section>
-      <PlatformLayerMap />
-      <PlatformCta openInquiry={openInquiry} />
+      <Hero route="contact" visual={<ContactVisual />} openInquiry={openInquiry} compact />
+      <ContactFaq />
     </>
   )
 }
 
-function ContactPage({ openInquiry }) {
+const contactFaqs = [
+  ['How quickly can we get started?', "We start with a short conversation to understand where the pressure sits in your business, then move at whatever pace makes sense for you."],
+  ['Do I need to know exactly what I want first?', "No. Most people start with a general sense of the problem, pipeline, cost, or workflow, and we help narrow it down together."],
+  ['What size businesses do you work with?', 'Our systems are built to scale from small teams to larger operations, so you only pay for what you actually need.'],
+  ['Is this a long contract?', "We scope every engagement around outcomes, not lock-in. You'll always know what you're committing to before you start."],
+]
+
+function ContactFaq() {
+  const [open, setOpen] = useState(0)
   return (
-    <>
-      <Hero route="contact" visual={<ContactPanel openInquiry={openInquiry} />} openInquiry={openInquiry} compact />
-      <section className="section contact-access-section">
-        <div className="wrapper contact-grid">
-          <div className="contact-card">
-            <p className="eyebrow">Direct expert access</p>
-            <h2>Contact Our Experts to Transform Your Business Today</h2>
-            <p>{meta.contact.text}</p>
-            <button type="button" className="email-card" onClick={() => openInquiry()}>
-              <span>Email</span>
-              <strong>{contactEmail}</strong>
-            </button>
-          </div>
-          <div className="brief-list">
-            {readinessSignals.map((item) => <div key={item}><Icon name="check" /><span>{item}</span></div>)}
-          </div>
+    <section className="section contact-faq-section">
+      <div className="wrapper">
+        <SectionHeader title="Common questions." />
+        <div className="faq-list">
+          {contactFaqs.map(([question, answer], index) => {
+            const isOpen = open === index
+            return (
+              <div className={`faq-row ${isOpen ? 'open' : ''}`} key={question}>
+                <button type="button" className="faq-question" onClick={() => setOpen(isOpen ? -1 : index)} aria-expanded={isOpen}>
+                  <span>{question}</span>
+                  <b aria-hidden="true">{isOpen ? '−' : '+'}</b>
+                </button>
+                {isOpen && <p className="faq-answer">{answer}</p>}
+              </div>
+            )
+          })}
         </div>
-      </section>
-      <ContactPath openInquiry={openInquiry} />
-    </>
+      </div>
+    </section>
   )
 }
 
@@ -289,21 +314,25 @@ function Hero({ route, visual, compact = false, openInquiry }) {
   const page = meta[route]
   const primaryIsInquiry = route !== 'solutions'
   return (
-    <section className={`hero ${compact ? 'compact' : ''}`}>
-      <div className="hero-lines" />
+    <section className={`hero ${compact ? 'compact' : ''} hero-${route}`}>
+      <div className="hero-glow" />
       <div className="wrapper hero-inner">
         <div className="hero-copy">
-          <p className="eyebrow">{page.eyebrow}</p>
-          <h1>{page.title}</h1>
+          <h1>
+            {page.accent && page.title && <span className="title-lead">{page.title}</span>}
+            {!page.accent && page.title}
+            {page.accent && <span className="title-accent">{page.accent}</span>}
+          </h1>
           <p>{page.text}</p>
           <div className="actions">
             {primaryIsInquiry
               ? <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
-              : <a className="button primary" href="#/solutions">{page.cta}</a>}
+              : <a className="button primary" href="#solutions-groups">{page.cta}</a>}
             {route === 'solutions'
               ? <button className="button secondary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
               : <a className="button secondary" href="#/solutions">View solutions</a>}
           </div>
+          {route === 'contact' && <a className="contact-email-link" href={`mailto:${contactEmail}`}>{contactEmail}</a>}
         </div>
         <div className="hero-visual">{visual}</div>
       </div>
@@ -311,36 +340,43 @@ function Hero({ route, visual, compact = false, openInquiry }) {
   )
 }
 
-function SectionHeader({ eyebrow, title, text }) {
+function SectionHeader({ title, text }) {
   return (
     <div className="section-header">
-      <p className="eyebrow">{eyebrow}</p>
       <h2>{title}</h2>
       {text && <p>{text}</p>}
     </div>
   )
 }
 
-function MetricStrip() {
-  return (
-    <section className="metric-strip wrapper">
-      {[
-        ['14 days', 'Implementation wrap-around sprint'],
-        ['6 hrs', 'Live finance monitoring cadence'],
-        ['8', 'Productized AI systems'],
-        ['ROI', 'Rapid bottom-line value focus'],
-      ].map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
-    </section>
-  )
-}
+const triadTones = ['indigo', 'blue', 'violet']
+const triadIcons = ['target', 'workflow', 'node']
 
 function Triad() {
   return (
-    <section className="section">
-      <div className="wrapper">
-        <SectionHeader eyebrow="The Architecture of Execution" title="The Core Triad." text="Business transformation requires commercial discipline, enterprise architecture, and next-gen technology working as one integrated delivery system." />
-        <div className="triad-grid">
-          {triad.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}
+    <section className="section triad-section">
+      <div className="wrapper triad-layout">
+        <div className="triad-intro">
+          <h2>The Core Triad.</h2>
+          <p>Business transformation requires commercial discipline, enterprise architecture, and next-gen technology working as one integrated delivery system.</p>
+        </div>
+        <div className="triad-list">
+          {triad.map(([, title, text], index) => {
+            const [kicker, role] = title.split(/:\s+/)
+            const [lead, rest] = splitLead(text)
+            return (
+              <Reveal as="article" delay={index * 0.12} className={`triad-row tone-${triadTones[index]}`} key={title}>
+                <div className="triad-row-head">
+                  <i><Icon name={triadIcons[index]} /></i>
+                  <div>
+                    <span className="triad-tag">{kicker}</span>
+                    <h3>{role}</h3>
+                  </div>
+                </div>
+                <p><strong>{lead}</strong> {rest}</p>
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -350,14 +386,20 @@ function Triad() {
 function OperatingJourney() {
   return (
     <section className="section journey-section">
-      <div className="wrapper journey-grid">
-        <div>
-          <SectionHeader eyebrow="The operating journey" title="From business pressure to AI operating advantage." text="The site journey should make the offer simple: understand the business, architect the right systems, deploy fast, and measure what changes." />
-          <JourneyOrbit />
-        </div>
-        <div className="journey-steps">
-          {journey.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>)}
-        </div>
+      <div className="wrapper">
+        <SectionHeader title="Operating Journey" />
+        <Reveal className="journey-track">
+          <div className="journey-line" />
+          <div className="journey-steps">
+            {journey.map(([title, text], index) => (
+              <article key={title} style={{ '--step': index }}>
+                <span className="journey-circle">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   )
@@ -368,7 +410,6 @@ function ExpertPartnership() {
     <section className="section validation-section">
       <div className="wrapper validation-panel">
         <div>
-          <p className="eyebrow">The Expert-Led Framework</p>
           <h2>Sector-Agnostic by Design. Expert-Driven by Partnership.</h2>
         </div>
         <div>
@@ -384,25 +425,40 @@ function StrategySequencer() {
   return (
     <section className="section strategy-lane-section">
       <div className="wrapper strategy-lane">
-        <SectionHeader eyebrow="Roadmap architecture" title="Every recommendation moves through a clear decision lane." text="A premium AI roadmap should be easy for leadership to understand, fund, and sequence." />
-        <StrategyDecisionMatrix />
+        <SectionHeader title="Every recommendation moves through a clear decision lane." text="A premium AI roadmap should be easy for leadership to understand, fund, and sequence." />
+        <Reveal><StrategyDecisionMatrix /></Reveal>
       </div>
     </section>
   )
 }
 
+const governancePillars = [
+  ['target', 'Human approval', 'Nothing ships without a person signing off on the outcome.'],
+  ['shield', 'Data privacy', 'Encrypted access paths keep sensitive records visible only to the people who need them.'],
+  ['node', 'Access roles', 'Team-level visibility means each person sees only what their role requires.'],
+  ['check', 'Compliance evidence', 'Every decision is logged, so audits and executive sign-off are straightforward.'],
+]
+
 function GovernanceLab() {
   return (
     <section className="section governance-lab-section">
       <div className="wrapper governance-lab">
-        <StrategyControlVisual />
-        <div>
-          <p className="eyebrow">Executive control layer</p>
-          <h2>Governance that keeps AI useful, secure, and commercially accountable.</h2>
-          <p>{advisory[2][1]}</p>
-          <div className="control-grid">
-            {['Data privacy', 'Human approval', 'Access roles', 'Compliance evidence'].map((item) => <span key={item}><Icon name="shield" />{item}</span>)}
+        <div className="governance-lab-intro">
+          <div>
+            <h2>Governance that keeps AI useful, secure, and commercially accountable.</h2>
           </div>
+          <div>
+            <p>{advisory[2][1]}</p>
+          </div>
+        </div>
+        <div className="governance-pillars">
+          {governancePillars.map(([icon, title, text]) => (
+            <article key={title} className="governance-pillar">
+              <i><Icon name={icon} /></i>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -410,28 +466,44 @@ function GovernanceLab() {
 }
 
 function SolutionsPreview({ openInquiry }) {
+  const [active, setActive] = useState(null)
   return (
     <section className="section">
       <div className="wrapper">
         <div className="section-split">
-          <SectionHeader eyebrow="Immediate Growth & Efficiencies" title="Scalable intelligence, subscribed." text="Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes." />
+          <SectionHeader title="Practical AI, subscribed." text="Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes. Tap a system to see what it does." />
           <a className="button secondary" href="#/solutions">Explore all systems</a>
         </div>
-        <div className="solution-grid preview">
-          {solutions.slice(0, 3).map((item, index) => <SolutionCard key={item[0]} item={item} index={index} openInquiry={openInquiry} />)}
+        <div className="solution-chip-grid">
+          {solutions.map((item, index) => (
+            <button type="button" className="solution-chip" key={item[0]} onClick={() => setActive(item)}>
+              <i><Icon name={solutionIcons[index] || 'node'} /></i>
+              <strong>{item[0]}</strong>
+              <em>{item[2]}</em>
+              <b className="solution-chip-plus" aria-hidden="true">+</b>
+            </button>
+          ))}
         </div>
       </div>
+      <SolutionInfoModal item={active} onClose={() => setActive(null)} openInquiry={openInquiry} />
     </section>
   )
 }
 
 function AdvisoryCard({ title, text, deliverable, index }) {
+  const [lead, rest] = splitLead(text)
+  const iconName = ['target', 'workflow', 'shield'][index] || 'node'
   return (
     <article className="advisory-card">
-      <span>{String(index + 1).padStart(2, '0')}</span>
+      <i className="advisory-icon"><Icon name={iconName} /></i>
       <h3>{title}</h3>
-      <p>{text}</p>
-      <strong>{deliverable}</strong>
+      <p><strong>{lead}</strong> {rest}</p>
+      <div className="advisory-deliverable">
+        <span>Deliverables</span>
+        <ul className="advisory-chip-list">
+          {splitList(deliverable).map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      </div>
     </article>
   )
 }
@@ -439,16 +511,65 @@ function AdvisoryCard({ title, text, deliverable, index }) {
 function SolutionCard({ item, index, openInquiry }) {
   const [name, system, purpose, text] = item
   const iconName = solutionIcons[index] || 'node'
+  const [lead, rest] = splitLead(text)
+
   return (
-    <button className="solution-card" type="button" onClick={() => openInquiry(name)} aria-label={`Inquire about ${name}`}>
-      <div className="card-grid" />
-      <div className="solution-top"><span>{String(index + 1).padStart(2, '0')}</span><i><Icon name={iconName} /></i></div>
+    <article className="solution-card">
+      <div className="solution-top">
+        <i><Icon name={iconName} /></i>
+        <span className="solution-system-chip">{system}</span>
+      </div>
       <h3>{name}</h3>
-      <strong>{system}</strong>
-      <em>{purpose}</em>
-      <p>{text}</p>
-      <div className="system-ready"><span>System ready</span><b /></div>
-    </button>
+      <p className="solution-purpose-line">{purpose}</p>
+      <p className="solution-benefit-line">{lead}</p>
+      {rest && <p className="solution-detail-line">{rest}</p>}
+      <button type="button" className="solution-link" onClick={() => openInquiry(name)}>
+        Inquire about {system}
+        <Icon name="arrow" />
+      </button>
+    </article>
+  )
+}
+
+function CategoryBanner({ title, text, count, tone, icon }) {
+  return (
+    <div className={`category-banner tone-${tone}`}>
+      <div className="category-banner-icon"><Icon name={icon} /></div>
+      <div className="category-banner-copy">
+        <h3>{title}</h3>
+        <p>{text}</p>
+      </div>
+      <span className="category-banner-count">{count} systems</span>
+    </div>
+  )
+}
+
+function SolutionsGroups({ openInquiry }) {
+  const groups = [
+    { key: 'growth', title: 'Growth', text: 'Systems that help you bring in more business.', icon: 'lead' },
+    { key: 'efficiency', title: 'Efficiency', text: 'Systems that save time and reduce cost.', icon: 'finance' },
+  ]
+  return (
+    <div className="solutions-groups">
+      {groups.map((group) => {
+        const items = solutions.filter((item) => item[4] === group.key)
+        return (
+          <div className={`solutions-group tone-${group.key}`} key={group.key}>
+            <CategoryBanner title={group.title} text={group.text} count={items.length} tone={group.key} icon={group.icon} />
+            <div className="solution-grid">
+              {items.map((item, i) => {
+                const index = solutions.indexOf(item)
+                return (
+                  <Reveal as="div" delay={i * 0.06} key={item[0]}>
+                    <SolutionCard item={item} index={index} openInquiry={openInquiry} />
+                  </Reveal>
+                )
+              })}
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -464,7 +585,6 @@ function SolutionSelector() {
     <section className="section solution-selector-section">
       <div className="wrapper selector-panel">
         <div>
-          <p className="eyebrow">Choose the starting point</p>
           <h2>Pick the business pressure. The right system becomes obvious.</h2>
         </div>
         <div className="solution-fit-board">
@@ -473,15 +593,14 @@ function SolutionSelector() {
             <span>Matched AIC systems</span>
             <span>Operating outcome</span>
           </div>
-          {pressureMap.map(([title, systems, outcome, icon], index) => (
-            <article className="fit-row" key={title} style={{ '--row': index }}>
+          {pressureMap.map(([title, systems, outcome, icon]) => (
+            <article className="fit-row" key={title}>
               <div>
                 <Icon name={icon} />
                 <h3>{title}</h3>
               </div>
               <p>{systems}</p>
               <strong>{outcome}</strong>
-              <i />
             </article>
           ))}
         </div>
@@ -494,9 +613,9 @@ function ImplementationSprint() {
   return (
     <section className="section risk-section">
       <div className="wrapper risk-banner sprint-banner">
-        <div>
-          <span>Risk Mitigation Protocol</span>
-          <p>Every productized subscription model is launched with an initial 14-day implementation wrap-around sprint. Our Solution Transformers manage all integration points directly, ensuring zero legacy system downtime and verified data security pipelines.</p>
+        <div className="risk-banner-copy">
+          <h2>How We Roll It Out</h2>
+          <p>Every new system launches with a careful, hands-on rollout. Our Solution Transformers manage all integration points directly, ensuring zero legacy system downtime and verified data security pipelines.</p>
         </div>
         <RiskGovernanceVisual />
       </div>
@@ -504,16 +623,31 @@ function ImplementationSprint() {
   )
 }
 
+function CtaVisual() {
+  const particles = Array.from({ length: 8 }, (_, i) => i + 1)
+  return (
+    <div className="cta-visual" aria-hidden="true">
+      <div className="cta-visual-blob blob-a" />
+      <div className="cta-visual-blob blob-b" />
+      <svg className="cta-wave" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path className="cta-wave-track" d="M0,112 C40,64 72,142 112,92 C152,42 182,120 222,72 C252,36 282,88 320,58" />
+        <path className="cta-wave-pulse" d="M0,112 C40,64 72,142 112,92 C152,42 182,120 222,72 C252,36 282,88 320,58" />
+      </svg>
+      {particles.map((i) => <span key={i} className={`cta-particle p-${i}`} />)}
+    </div>
+  )
+}
+
 function HomeCta({ openInquiry }) {
   return (
     <section className="section">
-      <div className="wrapper cta-panel">
-        <div>
-          <p className="eyebrow">Next step</p>
-          <h2>Connect with Our Experts Today to Bring the Value of AI to Your Business</h2>
-          <p>{meta.contact.text}</p>
+      <div className="wrapper cta-panel cta-panel-visual">
+        <div className="cta-panel-content">
+          <h2>Ready to Put AI to Work for Your Business?</h2>
+          <p>No complexity, no confusion. Just direct growth and real cost-savings, engineered by seasoned specialists.</p>
+          <button className="button primary" type="button" onClick={() => openInquiry()}>Talk to Our Experts</button>
         </div>
-        <button className="button primary" type="button" onClick={() => openInquiry()}>Contact Our Experts to Transform Your Business Today</button>
+        <CtaVisual />
       </div>
     </section>
   )
@@ -524,7 +658,6 @@ function StrategyCta({ openInquiry }) {
     <section className="section">
       <div className="wrapper cta-panel strategy-cta">
         <div>
-          <p className="eyebrow">Next strategic move</p>
           <h2>Architect the roadmap before software spend locks you in.</h2>
           <p>{meta.strategy.text}</p>
         </div>
@@ -539,168 +672,10 @@ function SolutionsCta({ openInquiry }) {
     <section className="section">
       <div className="wrapper cta-panel solutions-cta">
         <div>
-          <p className="eyebrow">Solution inquiry</p>
-          <h2>Select the system that matches your highest-friction workflow.</h2>
+          <h2>Choose the area of your business creating the most pressure, and we'll help you find the right system to improve it.</h2>
           <p>{meta.solutions.text}</p>
         </div>
         <button className="button primary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
-      </div>
-    </section>
-  )
-}
-
-function PlatformCta({ openInquiry }) {
-  return (
-    <section className="section">
-      <div className="wrapper cta-panel platform-cta">
-        <div>
-          <p className="eyebrow">System design</p>
-          <h2>Design the secure AI layer around the systems you already run.</h2>
-          <p>{meta.platform.text}</p>
-        </div>
-        <button className="button primary" type="button" onClick={() => openInquiry()}>Design the layer</button>
-      </div>
-    </section>
-  )
-}
-
-function PlatformLayerMap() {
-  return (
-    <section className="section layer-section">
-      <div className="wrapper layer-map">
-        <SectionHeader eyebrow="Data to decision flow" title="A clearer platform model for teams, systems, and leadership." text="Each layer has a role, so the page explains how AI becomes useful without making the business feel like a technical migration project." />
-        <DecisionFlowVisual />
-      </div>
-    </section>
-  )
-}
-
-function JourneyOrbit() {
-  return (
-    <div className="journey-orbit" aria-hidden="true">
-      <div className="orbit-ring ring-one" />
-      <div className="orbit-ring ring-two" />
-      <div className="orbit-ray ray-one" />
-      <div className="orbit-ray ray-two" />
-      <span className="orbit-node node-a" />
-      <span className="orbit-node node-b" />
-      <span className="orbit-node node-c" />
-      <strong>ROI</strong>
-      <small>Growth</small>
-      <small>Cost</small>
-      <small>Risk</small>
-    </div>
-  )
-}
-
-function StrategyDecisionMatrix() {
-  return (
-    <div className="decision-matrix roadmap-cockpit" aria-hidden="true">
-      <div className="cockpit-radar"><i /><i /><i /></div>
-      <div className="cockpit-lane">
-        {['Pressure', 'ROI score', 'Risk gate', 'Launch order'].map((item, index) => (
-          <span key={item} style={{ '--step': index }}><b>{String(index + 1).padStart(2, '0')}</b>{item}</span>
-        ))}
-      </div>
-      <div className="cockpit-core">
-        <Icon name="target" />
-        <strong>Roadmap engine</strong>
-        <small>ranked investment sequence</small>
-      </div>
-      <div className="cockpit-bars">
-        {['Growth value', 'Cost removal', 'Risk exposure'].map((item, index) => (
-          <span key={item}><small>{item}</small><i><b style={{ '--score': `${86 - index * 14}%` }} /></i></span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function SolutionRouter() {
-  return (
-    <div className="solution-router pressure-router solution-switchboard" aria-hidden="true">
-      <div className="switchboard-grid" />
-      <div className="switchboard-core"><Icon name="target" /><strong>Matched system layer</strong><small>pressure-to-solution routing</small></div>
-      <div className="switchboard-stream stream-a"><i /></div>
-      <div className="switchboard-stream stream-b"><i /></div>
-      <div className="switchboard-stream stream-c"><i /></div>
-      <div className="switchboard-stream stream-d"><i /></div>
-      {[
-        ['Revenue', 'SalesOS + LeadOS'],
-        ['Marketing', 'MediaOS + WebOS'],
-        ['Operations', 'CommsOS + Data Hub'],
-        ['Finance', 'finOS'],
-      ].map(([title, text], index) => (
-        <span className="router-chip switchboard-chip" key={title} style={{ '--chip': index }}><b>{title}</b><small>{text}</small></span>
-      ))}
-    </div>
-  )
-}
-
-function RiskGovernanceVisual() {
-  return (
-    <div className="risk-governance-visual" aria-hidden="true">
-      <div className="risk-core">
-        <Icon name="shield" />
-        <strong>14-day secure launch</strong>
-      </div>
-      <div className="risk-rail"><i /></div>
-      {[
-        ['01', 'Scope', 'integration boundaries'],
-        ['02', 'Secure', 'data pipeline checks'],
-        ['03', 'Govern', 'approval controls'],
-        ['04', 'Launch', 'zero downtime'],
-      ].map(([number, title, text], index) => (
-        <span className={`risk-gate gate-${index + 1}`} key={title} style={{ '--gate': index }}>
-          <b>{number}</b>
-          <strong>{title}</strong>
-          <small>{text}</small>
-        </span>
-      ))}
-    </div>
-  )
-}
-
-function DecisionFlowVisual() {
-  return (
-    <div className="decision-flow data-routing-visual" aria-hidden="true">
-      <div className="data-rail"><i /><i /><i /></div>
-      <div className="data-cluster source-cluster">
-        <span>Business systems</span>
-        {['Finance', 'Sales', 'Ops docs'].map((item) => <b key={item}>{item}</b>)}
-      </div>
-      <div className="data-core">
-        <Icon name="shield" />
-        <strong>Secure context layer</strong>
-        <small>permissions + retrieval + audit</small>
-      </div>
-      <div className="data-cluster output-cluster">
-        <span>Decision outputs</span>
-        {['Cost signal', 'Growth action', 'Risk alert'].map((item) => <b key={item}>{item}</b>)}
-      </div>
-    </div>
-  )
-}
-
-function ContactPath({ openInquiry }) {
-  return (
-    <section className="section contact-path-section">
-      <div className="wrapper contact-path">
-        <div>
-          <p className="eyebrow">What happens next</p>
-          <h2>A simple path from inquiry to focused AI opportunity.</h2>
-          <p>No complex technical integration lists. No software confusion. Just direct, unshakeable growth and major cost-savings engineered by seasoned business specialists.</p>
-        </div>
-        <div className="contact-flow inquiry-route">
-          <i className="route-line" />
-          {['Choose solution interest', 'Add business context', 'Open email draft', 'Map first ROI move'].map((item, index) => (
-            <button key={item} type="button" onClick={() => openInquiry()} style={{ '--step': index }}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <strong>{item}</strong>
-              <Icon name={index === 0 ? 'target' : index === 1 ? 'workflow' : index === 2 ? 'arrow' : 'chart'} />
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   )
@@ -721,199 +696,180 @@ function Icon({ name }) {
     node: <><circle cx="6" cy="12" r="2" /><circle cx="18" cy="6" r="2" /><circle cx="18" cy="18" r="2" /><path d="m8 11 8-4" /><path d="m8 13 8 4" /></>,
     shield: <><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z" /><path d="m9 12 2 2 4-5" /></>,
     target: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3" /></>,
-    database: <><ellipse cx="12" cy="5" rx="7" ry="3" /><path d="M5 5v10c0 1.7 3.1 3 7 3s7-1.3 7-3V5" /><path d="M5 10c0 1.7 3.1 3 7 3s7-1.3 7-3" /></>,
     workflow: <><path d="M5 6h5v5H5z" /><path d="M14 13h5v5h-5z" /><path d="M10 8h3a3 3 0 0 1 3 3v2" /></>,
-    chart: <><path d="M4 19V5" /><path d="M4 19h16" /><path d="M8 15v-4" /><path d="M12 15V8" /><path d="M16 15v-6" /></>,
-    arrow: <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>,
+    camera: <><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.4" /></>,
+    spark: <path d="M12 2c.9 4.2 2.9 6.2 7 7-4.1.9-6.1 2.9-7 7-.9-4.1-2.9-6.1-7-7 4.1-.8 6.1-2.8 7-7Z" fill="currentColor" stroke="none" />,
+    chevron: <path d="M6 9l6 6 6-6" />,
+    arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   }
   return <svg className="icon" {...common}>{paths[name] || paths.node}</svg>
 }
 
-function GrowthEngine() {
+function HomeVisual() {
   return (
-    <div className="visual-panel">
-      <div className="panel-head"><span>AI Growth Engine</span><strong>Live operating view</strong></div>
-      <div className="engine-core">
-        <i className="neural-scan" />
-        <div className="core-cube">AIC</div>
-        <b className="orbit-dot dot-one" />
-        <b className="orbit-dot dot-two" />
-        <b className="orbit-dot dot-three" />
-        {['Growth', 'ROI', 'Risk', 'Ops'].map((item) => <span key={item}>{item}</span>)}
-      </div>
-      <div className="telemetry">
-        {['Growth acceleration', 'Cost reduction', 'Capital protection'].map((item, index) => <div key={item}><span>{item}</span><i style={{ '--scale': `${84 - index * 9}%` }} /></div>)}
-      </div>
+    <div className="home-hero-visual">
+      <img src={heroImageSrc} alt="Diverse, confident founders and business owners supported by AI" width="1258" height="959" loading="eager" decoding="async" />
     </div>
   )
 }
 
-function RoadmapVisual() {
+function StrategyVisual() {
   return (
-    <div className="visual-panel strategy-console roadmap-visual">
-      <div className="roadmap-grid" />
-      <div className="roadmap-core">
-        <Icon name="target" />
-        <strong>AI roadmap</strong>
-        <span>ROI sequence</span>
-      </div>
-      <div className="roadmap-pulse pulse-one" />
-      <div className="roadmap-pulse pulse-two" />
-      {[
-        ['01', 'Audit', 'Find leakage'],
-        ['02', 'Model', 'Rank ROI'],
-        ['03', 'Govern', 'Control risk'],
-        ['04', 'Deploy', 'Sequence launch'],
-      ].map(([number, title, text], index) => (
-        <div className={`roadmap-stage stage-${index + 1}`} key={title} style={{ '--step': index }}>
-          <span>{number}</span>
-          <strong>{title}</strong>
-          <small>{text}</small>
-        </div>
-      ))}
+    <div className="strategy-hero-visual">
+      <img src={strategyImageSrc} alt="AI Catlyst strategists reviewing a roadmap and ROI metrics with a client team" width="1424" height="819" loading="eager" decoding="async" />
     </div>
   )
 }
 
 function SystemsMap() {
+  const growthCount = solutions.filter(([, , , , tone]) => tone === 'growth').length
+  const efficiencyCount = solutions.length - growthCount
   return (
-    <div className="visual-panel solution-hub systems-visual">
-      <div className="systems-orbit orbit-one" />
-      <div className="systems-orbit orbit-two" />
-      <div className="systems-route route-a" />
-      <div className="systems-route route-b" />
-      <div className="systems-route route-c" />
-      <div className="systems-core"><Icon name="node" /><strong>AIC Systems</strong></div>
-      {['SalesOS', 'MediaOS', 'WebOS', 'LeadOS', 'LinkedInOS', 'CommsOS', 'finOS', 'Data Hub'].map((item, index) => (
-        <span className={`system-chip system-${index + 1}`} key={item} style={{ '--chip': index }}>{item}</span>
-      ))}
-      <i className="systems-packet packet-a" />
-      <i className="systems-packet packet-b" />
-      <i className="systems-packet packet-c" />
-    </div>
-  )
-}
-
-function PlatformVisual() {
-  return (
-    <div className="visual-panel platform-console platform-routing">
-      <div className="routing-line line-a" />
-      <div className="routing-line line-b" />
-      <div className="platform-source source-left">
-        <strong>Existing systems</strong>
-        {['CRM', 'Finance', 'Docs'].map((item) => <span key={item}>{item}</span>)}
+    <div className="visual-panel systems-growth">
+      <div className="growth-header">
+        <span className="growth-header-icon"><Icon name="spark" /></span>
+        AI Systems Impact
       </div>
-      <div className="platform-core">
-        <Icon name="shield" />
-        <strong>Secure AI Layer</strong>
-        <small>Role-aware routing</small>
-      </div>
-      <div className="platform-source source-right">
-        <strong>AI outputs</strong>
-        {['SalesOS', 'Data Hub', 'finOS'].map((item) => <span key={item}>{item}</span>)}
-      </div>
-    </div>
-  )
-}
-
-function FlowVisual() {
-  return (
-    <div className="flow-visual workflow-audit workflow-visual">
-      <div className="workflow-stream" />
-      <div className="audit-board">
-        {['Manual drag', 'Duplicate tools', 'Hidden leakage'].map((item, index) => (
-          <span key={item} style={{ '--row': index }}><Icon name="target" />{item}</span>
+      <div className="growth-chart">
+        {solutions.map(([name, , , , tone], index) => (
+          <span
+            key={name}
+            className={`growth-bar tone-${tone}`}
+            style={{ '--h': `${34 + index * 8}%`, '--i': index }}
+          />
         ))}
       </div>
-      <div className="audit-router" aria-hidden="true">
-        <i />
-        <strong>AI routing</strong>
-      </div>
-      <div className="audit-output">
-        <strong>Efficiency model</strong>
-        <span><b style={{ '--scale': '78%' }} />Cost removal</span>
-        <span><b style={{ '--scale': '66%' }} />Workflow speed</span>
+      <div className="growth-legend">
+        <span className="legend-item tone-growth" style={{ flex: growthCount }}><i />Growth</span>
+        <span className="legend-item tone-efficiency" style={{ flex: efficiencyCount }}><i />Efficiency</span>
       </div>
     </div>
   )
 }
 
-function GovernanceVisual() {
+function FlowFan({ points, direction }) {
   return (
-    <div className="governance-visual governance-console governance-visual-live">
-      <div className="governance-ring ring-one" />
-      <div className="governance-ring ring-two" />
-      <div className="governance-shield">
+    <div className="flow-fan" aria-hidden="true">
+      <svg viewBox="0 0 100 64" preserveAspectRatio="none">
+        {points.map((x, index) => {
+          const d = direction === 'in' ? `M${x},0 L50,64` : `M50,0 L${x},64`
+          return (
+            <g key={x}>
+              <path className="flow-fan-track" d={d} vectorEffect="non-scaling-stroke" />
+              <path className="flow-fan-pulse" d={d} vectorEffect="non-scaling-stroke" style={{ animationDelay: `${index * 0.18}s` }} />
+            </g>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
+function StrategyDecisionMatrix() {
+  const inputs = ['Pressure', 'ROI score', 'Risk gate', 'Launch order']
+  const outputs = ['Growth value', 'Cost removal', 'Risk exposure']
+  const inXs = inputs.map((_, index) => ((index + 0.5) / inputs.length) * 100)
+  const outXs = outputs.map((_, index) => ((index + 0.5) / outputs.length) * 100)
+  return (
+    <div className="decision-matrix roadmap-cockpit" aria-hidden="true">
+      <span className="cockpit-label">Signals in</span>
+      <div className="cockpit-lane">
+        {inputs.map((item, index) => (
+          <span key={item} style={{ '--step': index }}><b>{String(index + 1).padStart(2, '0')}</b>{item}</span>
+        ))}
+      </div>
+      <FlowFan points={inXs} direction="in" />
+      <div className="cockpit-core">
+        <Icon name="target" />
+        <strong>Roadmap engine</strong>
+        <small>ranked investment sequence</small>
+      </div>
+      <FlowFan points={outXs} direction="out" />
+      <span className="cockpit-label">Prioritized output</span>
+      <div className="cockpit-bars">
+        {outputs.map((item, index) => (
+          <span key={item}><small>{item}</small><i><b style={{ '--score': `${86 - index * 14}%` }} /></i></span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function RiskGovernanceVisual() {
+  const steps = [
+    ['Scope', 'Integration boundaries'],
+    ['Secure', 'Data pipeline checks'],
+    ['Govern', 'Approval controls'],
+    ['Launch', 'Zero downtime'],
+  ]
+  return (
+    <div className="risk-governance-visual" aria-hidden="true">
+      <span className="risk-visual-label">
         <Icon name="shield" />
-        <strong>Secure</strong>
+        Secure, guided launch
+      </span>
+      <div className="risk-steps">
+        {steps.map(([title, text], index) => (
+          <div className="risk-step" key={title}>
+            <i>{String(index + 1).padStart(2, '0')}</i>
+            <div>
+              <strong>{title}</strong>
+              <small>{text}</small>
+            </div>
+          </div>
+        ))}
       </div>
-      {['Data guardrails', 'Executive sign-off', 'Compliance control'].map((item, index) => (
-        <span key={item} style={{ '--rule': index }}><Icon name="check" />{item}</span>
-      ))}
     </div>
   )
 }
 
-function PlatformGovernanceVisual() {
+function ContactVisual() {
   return (
-    <div className="platform-governance-visual" aria-hidden="true">
-      <div className="governance-gridlines" />
-      <div className="policy-core">
-        <Icon name="shield" />
-        <strong>Policy control</strong>
-        <small>secure AI layer</small>
-      </div>
-      {[
-        ['Data guardrails', 'encrypted access paths'],
-        ['Role permissions', 'team-level visibility'],
-        ['Audit evidence', 'logged AI activity'],
-        ['Compliance review', 'executive sign-off'],
-      ].map(([title, text], index) => (
-        <span className={`policy-node policy-${index + 1}`} key={title} style={{ '--node': index }}>
-          <Icon name="check" />
-          <b>{title}</b>
-          <small>{text}</small>
-        </span>
-      ))}
-      <i className="policy-signal signal-one" />
-      <i className="policy-signal signal-two" />
+    <div className="contact-panel">
+      <div className="contact-glow" />
+      <img
+        className="contact-image"
+        src={contactImageSrc}
+        alt="A diverse team of AI Catlyst experts, ready to help with your business"
+        width="1187"
+        height="719"
+        loading="eager"
+        decoding="async"
+      />
     </div>
   )
 }
 
-function StrategyControlVisual() {
-  return (
-    <div className="control-visual executive-control-live" aria-hidden="true">
-      <div className="control-gridlines" />
-      <div className="approval-core">
-        <Icon name="shield" />
-        <strong>Executive control</strong>
-        <small>approve, gate, evidence</small>
-      </div>
-      {['Human approval', 'Data privacy', 'Access roles', 'Compliance evidence'].map((item, index) => (
-        <span className={`approval-node approval-${index + 1}`} key={item} style={{ '--node': index }}><Icon name={index === 0 ? 'target' : 'check'} />{item}</span>
-      ))}
-      <i className="approval-scan scan-one" />
-      <i className="approval-scan scan-two" />
-    </div>
-  )
-}
+function SolutionInfoModal({ item, onClose, openInquiry }) {
+  useEffect(() => {
+    if (!item) return undefined
+    document.body.classList.add('modal-open')
+    const onKey = (event) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.classList.remove('modal-open')
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [item, onClose])
 
-function ContactPanel({ openInquiry }) {
+  if (!item) return null
+  const [name, system, purpose, text] = item
+
   return (
-    <div className="visual-panel contact-panel inquiry-signal contact-dispatch">
-      <div className="signal-orbit" aria-hidden="true"><i /><i /><i /></div>
-      <div className="dispatch-packet packet-one" />
-      <div className="dispatch-packet packet-two" />
-      <div className="signal-card">
-        <span>Inquiry signal</span>
-        <strong>Growth opportunity detected</strong>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="solution-info-title">
+      <button className="modal-backdrop" type="button" aria-label="Close" onClick={onClose} />
+      <div className="modal-panel solution-info-panel">
+        <button className="modal-close" type="button" aria-label="Close" onClick={onClose}>×</button>
+        <span className="solution-system-chip">{system}</span>
+        <h2 id="solution-info-title">{name}</h2>
+        <p className="solution-info-purpose">{purpose}</p>
+        <p>{text}</p>
+        <div className="modal-actions solution-info-actions">
+          <button className="button primary" type="button" onClick={() => { onClose(); openInquiry(name) }}>Inquire about {system}</button>
+        </div>
       </div>
-      <div className="signal-options">
-        {['SalesOS', 'finOS', 'Data Hub'].map((item) => <span key={item}>{item}</span>)}
-      </div>
-      <button type="button" onClick={() => openInquiry()}>{contactEmail}</button>
-      <p>Immediate growth opportunities, structural efficiencies, rapid ROI roadmap, and risk mitigation framework.</p>
     </div>
   )
 }
@@ -964,7 +920,6 @@ function InquiryModal({ open, initialSolution, onClose }) {
       <button className="modal-backdrop" type="button" aria-label="Close inquiry" onClick={onClose} />
       <form className="modal-panel" onSubmit={submit}>
         <button className="modal-close" type="button" aria-label="Close inquiry" onClick={onClose}>×</button>
-        <p className="eyebrow">Solution inquiry</p>
         <h2 id="inquiry-title">What solutions are you looking for?</h2>
         <p>Select the systems you want to discuss and add a short note. We will open your email client with everything ready to send.</p>
         <div className="inquiry-options">
@@ -994,7 +949,7 @@ function Footer({ openInquiry }) {
       <div className="wrapper footer-grid">
         <div>
           <div className="footer-logo-row">
-            <img src={assetPath('aicatlyst-long.png')} alt="AI Catlyst" />
+            <img src={logoSrc} alt="AI Catlyst" width="170" height="47" loading="lazy" decoding="async" />
           </div>
           <p>{groupLine}</p>
           <p>Driving Growth & Efficiencies with AI for businesses that need practical strategy, rapid deployment, and measurable bottom-line outcomes.</p>
@@ -1008,13 +963,15 @@ function Footer({ openInquiry }) {
           {solutions.slice(0, 5).map(([name]) => <a key={name} href="#/solutions">{name}</a>)}
         </nav>
         <div className="footer-contact">
-          <span>Direct expert access</span>
-          <button type="button" onClick={() => openInquiry()}>Contact Our Experts to Transform Your Business Today</button>
+          <span>Get in touch</span>
+          <button type="button" onClick={() => openInquiry()}>Talk to Our Experts</button>
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </div>
       </div>
       <div className="wrapper footer-legal">
-        <small>© 2026 AI Catlyst Ltd. A Knights Move Consulting Company. All Rights Reserved. Powered by <a href="https://levatahq.com" target="_blank" rel="noreferrer">Levata</a></small>
+        <small className="footer-legal-left">© 2026 AI Catlyst Ltd. All Rights Reserved.</small>
+        <small className="footer-legal-center"><a className="footer-legal-brand-link" href="https://knightsmoveconsulting.com/" target="_blank" rel="noreferrer">A Knights Move Consulting Group Company</a></small>
+        <small className="footer-legal-right">Powered by <a className="footer-legal-plain-link" href="https://levatahq.com" target="_blank" rel="noreferrer">Levata</a></small>
       </div>
     </footer>
   )
