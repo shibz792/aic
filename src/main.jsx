@@ -32,13 +32,13 @@ const meta = {
     title: 'Crisis-Proof, Future-Proof Application of AI for ',
     accent: 'Optimal Results.',
     text: 'We analyze your business layout first, deploying AI to accelerate growth and manufacture rapid efficiencies.',
-    cta: 'Architect the roadmap',
+    cta: 'View solutions',
   },
   solutions: {
     pageTitle: 'AI Catlyst | Solutions',
     eyebrow: 'Immediate Growth & Efficiencies',
-    title: 'Practical AI Systems to Drive Growth and Efficiencies. ',
-    accent: 'Subscribed!',
+    title: '',
+    accent: 'Ready to Deploy Solutions',
     text: 'Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes.',
     cta: 'Explore solutions',
   },
@@ -65,20 +65,20 @@ const advisory = [
 ]
 
 const solutions = [
-  ['AIC SalesGrow', 'SalesOS', 'Automated Sales Tracking & Lead Management', "Stops your sales team from wasting hours on manual CRM data entry. By securely connecting to your team's day-to-day communication stack, the system automatically reads incoming inquiries, creates customer profiles, scores lead interest, and instantly drafts tailored replies. It cuts down expensive software clutter and accelerates your pipeline without expanding headcount.", 'growth'],
-  ['AIC MediaGrow', 'MediaOS', 'Instant Marketing & Ad Creation', 'Replaces slow, high-cost marketing studio production with rapid, high-margin software processing power. Simply input a link to a high-performing industry benchmark, and the system forensically analyzes why it works, writing fresh scripts, generating realistic voiceovers, assembling video variations, and dropping production-ready drafts straight into your campaign ad manager instantly.', 'growth'],
-  ['AIC WebModerniser', 'WebOS', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
-  ['AIC QualLeads', 'LeadOS', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.', 'growth'],
-  ['AIC Lead Magnet Linkedin', 'LinkedInOS', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.', 'growth'],
-  ['AIC CommsGrow', 'CommsOS', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
-  ['AIC FinMaster', 'finOS', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
-  ['AIC Data Access', 'Data Hub', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
+  ['AIC Sales Grow', 'Sales Grow', 'Automated Sales Tracking & Lead Management', "Stops your sales team from wasting hours on manual CRM data entry. By securely connecting to your team's day-to-day communication stack, the system automatically reads incoming inquiries, creates customer profiles, scores lead interest, and instantly drafts tailored replies. It cuts down expensive software clutter and accelerates your pipeline without expanding headcount.", 'growth'],
+  ['AIC Media Grow', 'Media Grow', 'Instant Marketing & Ad Creation', 'Replaces slow, high-cost marketing studio production with rapid, high-margin software processing power. Simply input a link to a high-performing industry benchmark, and the system forensically analyzes why it works, writing fresh scripts, generating realistic voiceovers, assembling video variations, and dropping production-ready drafts straight into your campaign ad manager instantly.', 'growth'],
+  ['AIC Web Moderniser', 'Web Moderniser', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
+  ['AIC Qual Leads', 'Qual Leads', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.', 'growth'],
+  ['AIC Lead Magnet LinkedIn', 'Lead Magnet LinkedIn', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.', 'growth'],
+  ['AIC Comms Grow', 'Comms Grow', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
+  ['AIC Fin Master', 'Fin Master', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
+  ['AIC Data Access', 'Data Access', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
 ]
 
 const solutionIcons = ['pipeline', 'media', 'web', 'lead', 'linkedin', 'memory', 'finance', 'search']
 
 const journey = [
-  ['Order', 'Locate growth opportunities, cash leakage, manual drag, and duplicated software spend.'],
+  ['Audit', 'Locate growth opportunities, cash leakage, manual drag, and duplicated software spend.'],
   ['Architect', 'Build the AI operating layer around your current business knowledge, data, and teams.'],
   ['Deploy', 'Launch focused systems with integration support, governance, and measurable ROI signals.'],
   ['Compound', 'Turn every workflow improvement into reusable intelligence across sales, finance, operations, and leadership.'],
@@ -128,6 +128,16 @@ function Reveal({ children, delay = 0, as = 'div', className = '' }) {
   )
 }
 
+function AmbientBackground() {
+  return (
+    <div className="ambient-bg" aria-hidden="true">
+      <span className="ambient-blob ambient-a" />
+      <span className="ambient-blob ambient-b" />
+      <span className="ambient-blob ambient-c" />
+    </div>
+  )
+}
+
 function App() {
   const [route, setRoute] = useState(getRoute)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -159,6 +169,7 @@ function App() {
 
   return (
     <div className="site-shell">
+      <AmbientBackground />
       <Header active={route} menuOpen={menuOpen} setMenuOpen={setMenuOpen} openInquiry={openInquiry} />
       <main>
         {route === 'home' && <HomePage openInquiry={openInquiry} />}
@@ -258,8 +269,12 @@ function SolutionsPage({ openInquiry }) {
       <Hero route="solutions" visual={<SystemsMap />} openInquiry={openInquiry} compact />
       <section className="section solutions-section" id="solutions-groups">
         <div className="wrapper">
-          <SectionHeader title="Plug-and-play business tools built to slash software overhead." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
+          <SectionHeader title="Plug-and-play business tools built to drive growth immediately instead of software overhead." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
           <SolutionsGroups openInquiry={openInquiry} />
+          <div className="bespoke-note">
+            <strong>Need something custom?</strong>
+            <p>We also design bespoke or customised solutions for any business issue that can&rsquo;t be solved by the eight systems. We will continue expanding the library with more solutions in the future.</p>
+          </div>
         </div>
       </section>
       <SolutionSelector />
@@ -325,14 +340,19 @@ function Hero({ route, visual, compact = false, openInquiry }) {
           </h1>
           <p>{page.text}</p>
           <div className="actions">
-            {primaryIsInquiry
-              ? <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
-              : <a className="button primary" href="#solutions-groups">{page.cta}</a>}
-            {route === 'solutions'
-              ? <button className="button secondary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
-              : <a className="button secondary" href="#/solutions">View solutions</a>}
+            {route === 'strategy' ? (
+              <a className="button primary" href="#/solutions">View solutions</a>
+            ) : (
+              <>
+                {primaryIsInquiry
+                  ? <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
+                  : <a className="button primary" href="#solutions-groups">{page.cta}</a>}
+                {route === 'solutions'
+                  ? <button className="button secondary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
+                  : <a className="button secondary" href="#/solutions">View solutions</a>}
+              </>
+            )}
           </div>
-          {route === 'contact' && <a className="contact-email-link" href={`mailto:${contactEmail}`}>{contactEmail}</a>}
         </div>
         <div className="hero-visual">{visual}</div>
       </div>
@@ -471,7 +491,7 @@ function SolutionsPreview({ openInquiry }) {
     <section className="section">
       <div className="wrapper">
         <div className="section-split">
-          <SectionHeader title="Practical AI, subscribed." text="Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes. Tap a system to see what it does." />
+          <SectionHeader title="Ready to Deploy Solutions" text="Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes. Tap a system to see what it does." />
           <a className="button secondary" href="#/solutions">Explore all systems</a>
         </div>
         <div className="solution-chip-grid">
@@ -524,7 +544,7 @@ function SolutionCard({ item, index, openInquiry }) {
       <p className="solution-benefit-line">{lead}</p>
       {rest && <p className="solution-detail-line">{rest}</p>}
       <button type="button" className="solution-link" onClick={() => openInquiry(name)}>
-        Inquire about {system}
+        Deploy {system}
         <Icon name="arrow" />
       </button>
     </article>
@@ -575,10 +595,10 @@ function SolutionsGroups({ openInquiry }) {
 
 function SolutionSelector() {
   const pressureMap = [
-    ['Revenue', 'SalesGrow, QualLeads, Lead Magnet Linkedin', 'Pipeline speed', 'pipeline'],
-    ['Marketing', 'MediaGrow, WebModerniser', 'Campaign output', 'media'],
-    ['Operations', 'CommsGrow, Data Access', 'Workflow memory', 'workflow'],
-    ['Finance', 'FinMaster', 'Expense control', 'finance'],
+    ['Revenue', 'Sales Grow, Qual Leads, Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
+    ['Marketing', 'Media Grow, Web Moderniser', 'Campaign output', 'media'],
+    ['Operations', 'Comms Grow, Data Access', 'Workflow memory', 'workflow'],
+    ['Finance', 'Fin Master', 'Expense control', 'finance'],
   ]
 
   return (
@@ -653,15 +673,13 @@ function HomeCta({ openInquiry }) {
   )
 }
 
-function StrategyCta({ openInquiry }) {
+function StrategyCta() {
   return (
     <section className="section">
       <div className="wrapper cta-panel strategy-cta">
         <div>
-          <h2>Architect the roadmap before software spend locks you in.</h2>
           <p>{meta.strategy.text}</p>
         </div>
-        <button className="button primary" type="button" onClick={() => openInquiry()}>Architect the roadmap</button>
       </div>
     </section>
   )
@@ -867,7 +885,7 @@ function SolutionInfoModal({ item, onClose, openInquiry }) {
         <p className="solution-info-purpose">{purpose}</p>
         <p>{text}</p>
         <div className="modal-actions solution-info-actions">
-          <button className="button primary" type="button" onClick={() => { onClose(); openInquiry(name) }}>Inquire about {system}</button>
+          <button className="button primary" type="button" onClick={() => { onClose(); openInquiry(name) }}>Deploy {system}</button>
         </div>
       </div>
     </div>
@@ -936,7 +954,7 @@ function InquiryModal({ open, initialSolution, onClose }) {
         </label>
         <div className="modal-actions">
           <button className="button secondary" type="button" onClick={onClose}>Cancel</button>
-          <button className="button primary" type="submit">Open email client</button>
+          <button className="button primary" type="submit">Send</button>
         </div>
       </form>
     </div>
@@ -965,7 +983,6 @@ function Footer({ openInquiry }) {
         <div className="footer-contact">
           <span>Get in touch</span>
           <button type="button" onClick={() => openInquiry()}>Talk to Our Experts</button>
-          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </div>
       </div>
       <div className="wrapper footer-legal">
