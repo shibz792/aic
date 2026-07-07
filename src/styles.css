@@ -21,7 +21,7 @@
   --brand-blue: #1857d6;
   --brand-blue-soft: #e3edfd;
   --brand-soft: #ede9fb;
-  --ink-panel: #2b2455;
+  --ink-panel: #1a1533;
   --gradient-cta: linear-gradient(100deg, var(--brand-blue), var(--brand) 45%, var(--brand-2) 75%, var(--brand-blue));
 
   /* Shadow system: Open Props' HSL elevation scale, retuned to a brand-indigo cast
@@ -1050,29 +1050,47 @@ h3 {
 }
 
 .bespoke-note {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 10px;
   margin-top: 8px;
-  padding: 36px 40px;
+  padding: 44px 40px;
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--brand);
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand) 60%, var(--brand-2));
   box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.bespoke-note::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -8%;
+  width: 45%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+  filter: blur(40px);
+  animation: cta-drift 16s ease-in-out infinite;
+}
+
+.bespoke-note > * {
+  position: relative;
+  z-index: 1;
 }
 
 .bespoke-note strong {
-  font-size: 18px;
-  color: var(--ink);
+  font-size: 20px;
+  color: #fff;
 }
 
 .bespoke-note p {
   font-size: 15px;
   line-height: 1.7;
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.88);
   max-width: 60ch;
 }
 
@@ -1267,33 +1285,6 @@ h3 {
   font-size: 13px;
   line-height: 1.65;
   color: var(--body);
-}
-
-.solution-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-  width: 100%;
-  color: var(--brand);
-  font-size: 13.5px;
-  font-weight: 700;
-}
-
-.tone-growth .solution-link {
-  color: var(--brand-blue);
-}
-
-.solution-link .icon {
-  width: 15px;
-  height: 15px;
-  transition: transform 0.25s var(--ease);
-}
-
-.solution-card:hover .solution-link .icon {
-  transform: translateX(4px);
 }
 
 /* Home preview: name-only solution chips */
@@ -1583,8 +1574,7 @@ h3 {
   flex-wrap: wrap;
   padding: 48px;
   border-radius: var(--radius-lg);
-  background: var(--bg-alt);
-  border: 1px solid var(--line);
+  background: var(--ink-panel);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
@@ -1597,7 +1587,7 @@ h3 {
   width: 55%;
   aspect-ratio: 1;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.1), rgba(24, 87, 214, 0.06) 60%, transparent 75%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.55), rgba(24, 87, 214, 0.25) 60%, transparent 75%);
   filter: blur(50px);
   animation: cta-drift 16s ease-in-out infinite;
 }
@@ -1608,11 +1598,11 @@ h3 {
 }
 
 .cta-panel h2 {
-  color: var(--heading);
+  color: #fff;
 }
 
 .cta-panel p {
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.86);
   max-width: 560px;
 }
 
@@ -1630,7 +1620,13 @@ h3 {
   max-width: none;
   font-size: 19px;
   line-height: 1.65;
-  color: var(--heading);
+  color: #fff;
+}
+
+.cta-panel .button.primary {
+  background: #fff;
+  color: var(--brand);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
 .cta-panel-visual {
@@ -1668,7 +1664,7 @@ h3 {
   position: absolute;
   border-radius: 999px;
   filter: blur(36px);
-  opacity: 0.22;
+  opacity: 0.6;
 }
 
 .blob-a {
@@ -1676,7 +1672,7 @@ h3 {
   aspect-ratio: 1;
   top: -8%;
   right: 4%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.5), transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.6), transparent 70%);
   animation: cta-blob-drift-a 13s ease-in-out infinite;
 }
 
@@ -1685,7 +1681,7 @@ h3 {
   aspect-ratio: 1;
   bottom: -12%;
   left: 6%;
-  background: radial-gradient(circle, rgba(24, 87, 214, 0.45), transparent 70%);
+  background: radial-gradient(circle, rgba(24, 87, 214, 0.55), transparent 70%);
   animation: cta-blob-drift-b 15s ease-in-out infinite;
 }
 
@@ -1698,7 +1694,7 @@ h3 {
 }
 
 .cta-wave-track {
-  stroke: var(--line);
+  stroke: rgba(255, 255, 255, 0.14);
   stroke-width: 2;
   fill: none;
 }
@@ -1709,7 +1705,7 @@ h3 {
   stroke-linecap: round;
   fill: none;
   stroke-dasharray: 55 600;
-  filter: drop-shadow(0 0 4px rgba(124, 58, 237, 0.45));
+  filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.85)) drop-shadow(0 0 16px rgba(24, 87, 214, 0.6));
   animation: cta-wave-flow 3.8s linear infinite;
 }
 
@@ -1718,8 +1714,7 @@ h3 {
   bottom: 6%;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--brand-blue), var(--brand-2));
-  box-shadow: 0 0 6px 1px rgba(124, 58, 237, 0.35);
-  opacity: 0.8;
+  box-shadow: 0 0 10px 2px rgba(124, 58, 237, 0.55);
   animation: cta-particle-float linear infinite;
   z-index: 1;
 }

@@ -269,11 +269,11 @@ function SolutionsPage({ openInquiry }) {
       <Hero route="solutions" visual={<SystemsMap />} openInquiry={openInquiry} compact />
       <section className="section solutions-section" id="solutions-groups">
         <div className="wrapper">
-          <SectionHeader title="Plug-and-play business tools built to drive growth immediately instead of software overhead." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
-          <SolutionsGroups openInquiry={openInquiry} />
+          <SectionHeader title="Plug-and-play business tools built to drive growth immediately." text="Maintain a flexible, balanced grid of fast-acting operational tools built to erase manual tasks and deliver immediate monthly savings." />
+          <SolutionsGroups />
           <div className="bespoke-note">
-            <strong>Need something custom?</strong>
-            <p>We also design bespoke or customised solutions for any business issue that can&rsquo;t be solved by the eight systems. We will continue expanding the library with more solutions in the future.</p>
+            <strong>Need something bespoke?</strong>
+            <p>We also design bespoke or customised solutions for any business issue that can&rsquo;t be solved by our existing solutions. We will continue expanding the library with more solutions in the future.</p>
           </div>
         </div>
       </section>
@@ -327,7 +327,6 @@ function ContactFaq() {
 
 function Hero({ route, visual, compact = false, openInquiry }) {
   const page = meta[route]
-  const primaryIsInquiry = route !== 'solutions'
   return (
     <section className={`hero ${compact ? 'compact' : ''} hero-${route}`}>
       <div className="hero-glow" />
@@ -342,14 +341,12 @@ function Hero({ route, visual, compact = false, openInquiry }) {
           <div className="actions">
             {route === 'strategy' ? (
               <a className="button primary" href="#/solutions">View solutions</a>
+            ) : route === 'solutions' ? (
+              <button className="button primary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
             ) : (
               <>
-                {primaryIsInquiry
-                  ? <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
-                  : <a className="button primary" href="#solutions-groups">{page.cta}</a>}
-                {route === 'solutions'
-                  ? <button className="button secondary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
-                  : <a className="button secondary" href="#/solutions">View solutions</a>}
+                <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
+                <a className="button secondary" href="#/solutions">View solutions</a>
               </>
             )}
           </div>
@@ -528,8 +525,8 @@ function AdvisoryCard({ title, text, deliverable, index }) {
   )
 }
 
-function SolutionCard({ item, index, openInquiry }) {
-  const [name, system, purpose, text] = item
+function SolutionCard({ item, index }) {
+  const [name, , purpose, text] = item
   const iconName = solutionIcons[index] || 'node'
   const [lead, rest] = splitLead(text)
 
@@ -537,16 +534,11 @@ function SolutionCard({ item, index, openInquiry }) {
     <article className="solution-card">
       <div className="solution-top">
         <i><Icon name={iconName} /></i>
-        <span className="solution-system-chip">{system}</span>
       </div>
       <h3>{name}</h3>
       <p className="solution-purpose-line">{purpose}</p>
       <p className="solution-benefit-line">{lead}</p>
       {rest && <p className="solution-detail-line">{rest}</p>}
-      <button type="button" className="solution-link" onClick={() => openInquiry(name)}>
-        Deploy {system}
-        <Icon name="arrow" />
-      </button>
     </article>
   )
 }
@@ -564,7 +556,7 @@ function CategoryBanner({ title, text, count, tone, icon }) {
   )
 }
 
-function SolutionsGroups({ openInquiry }) {
+function SolutionsGroups() {
   const groups = [
     { key: 'growth', title: 'Growth', text: 'Systems that help you bring in more business.', icon: 'lead' },
     { key: 'efficiency', title: 'Efficiency', text: 'Systems that save time and reduce cost.', icon: 'finance' },
@@ -581,7 +573,7 @@ function SolutionsGroups({ openInquiry }) {
                 const index = solutions.indexOf(item)
                 return (
                   <Reveal as="div" delay={i * 0.06} key={item[0]}>
-                    <SolutionCard item={item} index={index} openInquiry={openInquiry} />
+                    <SolutionCard item={item} index={index} />
                   </Reveal>
                 )
               })}
@@ -595,10 +587,10 @@ function SolutionsGroups({ openInquiry }) {
 
 function SolutionSelector() {
   const pressureMap = [
-    ['Revenue', 'Sales Grow, Qual Leads, Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
-    ['Marketing', 'Media Grow, Web Moderniser', 'Campaign output', 'media'],
-    ['Operations', 'Comms Grow, Data Access', 'Workflow memory', 'workflow'],
-    ['Finance', 'Fin Master', 'Expense control', 'finance'],
+    ['Revenue', 'AIC Sales Grow, AIC Qual Leads, AIC Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
+    ['Marketing', 'AIC Media Grow, AIC Web Moderniser', 'Campaign output', 'media'],
+    ['Operations', 'AIC Comms Grow, AIC Data Access', 'Workflow memory', 'workflow'],
+    ['Finance', 'AIC Fin Master', 'Expense control', 'finance'],
   ]
 
   return (
@@ -873,19 +865,18 @@ function SolutionInfoModal({ item, onClose, openInquiry }) {
   }, [item, onClose])
 
   if (!item) return null
-  const [name, system, purpose, text] = item
+  const [name, , purpose, text] = item
 
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-labelledby="solution-info-title">
       <button className="modal-backdrop" type="button" aria-label="Close" onClick={onClose} />
       <div className="modal-panel solution-info-panel">
         <button className="modal-close" type="button" aria-label="Close" onClick={onClose}>×</button>
-        <span className="solution-system-chip">{system}</span>
         <h2 id="solution-info-title">{name}</h2>
         <p className="solution-info-purpose">{purpose}</p>
         <p>{text}</p>
         <div className="modal-actions solution-info-actions">
-          <button className="button primary" type="button" onClick={() => { onClose(); openInquiry(name) }}>Deploy {system}</button>
+          <button className="button primary" type="button" onClick={() => { onClose(); openInquiry(name) }}>Deploy {name}</button>
         </div>
       </div>
     </div>
@@ -939,7 +930,7 @@ function InquiryModal({ open, initialSolution, onClose }) {
       <form className="modal-panel" onSubmit={submit}>
         <button className="modal-close" type="button" aria-label="Close inquiry" onClick={onClose}>×</button>
         <h2 id="inquiry-title">What solutions are you looking for?</h2>
-        <p>Select the systems you want to discuss and add a short note. We will open your email client with everything ready to send.</p>
+        <p>Select the systems you want to discuss and add a short note.</p>
         <div className="inquiry-options">
           {solutionNames.map((name) => (
             <label key={name} className={selected.includes(name) ? 'selected' : ''}>
