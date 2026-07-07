@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import emailjs from '@emailjs/browser'
 import './styles.css'
 
-const contactEmail = 'khalid@aicatlyst.com'
+const EMAILJS_SERVICE_ID = 'service_qfxq99o'
+const EMAILJS_TEMPLATE_ID = 'template_8liysfa'
+const EMAILJS_PUBLIC_KEY = 'QF-nja7VZqVffH9T-'
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY })
 const groupLine = 'A Knights Move Consulting Group Company'
 const assetPath = (path) => `${import.meta.env.BASE_URL}${path}`
 const logoSrc = assetPath('aicatlyst-logo-true.png')
@@ -886,6 +890,9 @@ function SolutionInfoModal({ item, onClose, openInquiry }) {
 function InquiryModal({ open, initialSolution, onClose }) {
   const [selected, setSelected] = useState(() => initialSolution ? [initialSolution] : [])
   const [note, setNote] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle')
   const solutionNames = useMemo(() => solutions.map(([name]) => name), [])
 
   useEffect(() => {
@@ -907,22 +914,36 @@ function InquiryModal({ open, initialSolution, onClose }) {
 
   const submit = (event) => {
     event.preventDefault()
-    const body = [
-      'Hello AI Catlyst team,',
-      '',
-      'I would like to discuss the following solution interest:',
-      selected.length ? selected.join(', ') : 'Not specified',
-      '',
-      'Notes:',
-      note.trim() || 'No additional notes added.',
-      '',
-      'Please contact me to arrange the next step.',
-    ].join('\n')
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent('AI Catlyst solution inquiry')}&body=${encodeURIComponent(body)}`
-    onClose()
+    setStatus('sending')
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name,
+      from_email: email,
+      solutions: selected.length ? selected.join(', ') : 'Not specified',
+      notes: note.trim() || 'No additional notes added.',
+    }).then(() => {
+      setStatus('sent')
+    }).catch(() => {
+      setStatus('error')
+    })
   }
 
   if (!open) return null
+
+  if (status === 'sent') {
+    return (
+      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-title">
+        <button className="modal-backdrop" type="button" aria-label="Close inquiry" onClick={onClose} />
+        <div className="modal-panel inquiry-success">
+          <button className="modal-close" type="button" aria-label="Close inquiry" onClick={onClose}>×</button>
+          <h2 id="inquiry-title">Message sent.</h2>
+          <p>Thanks, {name || 'there'} — we&rsquo;ve received your inquiry and will be in touch shortly.</p>
+          <div className="modal-actions">
+            <button className="button primary" type="button" onClick={onClose}>Done</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-title">
@@ -931,6 +952,16 @@ function InquiryModal({ open, initialSolution, onClose }) {
         <button className="modal-close" type="button" aria-label="Close inquiry" onClick={onClose}>×</button>
         <h2 id="inquiry-title">What solutions are you looking for?</h2>
         <p>Select the systems you want to discuss and add a short note.</p>
+        <div className="inquiry-fields">
+          <label className="note-field">
+            <span>Your name</span>
+            <input type="text" value={name} onChange={(event) => setName(event.target.value)} required placeholder="Jane Smith" />
+          </label>
+          <label className="note-field">
+            <span>Your email</span>
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required placeholder="jane@company.com" />
+          </label>
+        </div>
         <div className="inquiry-options">
           {solutionNames.map((name) => (
             <label key={name} className={selected.includes(name) ? 'selected' : ''}>
@@ -943,9 +974,12 @@ function InquiryModal({ open, initialSolution, onClose }) {
           <span>Notes</span>
           <textarea value={note} onChange={(event) => setNote(event.target.value)} rows="5" placeholder="Tell us what you want to improve, automate, or understand first." />
         </label>
+        {status === 'error' && <p className="inquiry-error">Something went wrong sending your message. Please try again, or email us directly.</p>}
         <div className="modal-actions">
           <button className="button secondary" type="button" onClick={onClose}>Cancel</button>
-          <button className="button primary" type="submit">Send</button>
+          <button className="button primary" type="submit" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : 'Send'}
+          </button>
         </div>
       </form>
     </div>

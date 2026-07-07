@@ -2211,7 +2211,8 @@ h3 {
   color: var(--ink);
 }
 
-.note-field textarea {
+.note-field textarea,
+.note-field input {
   padding: 14px 16px;
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
@@ -2219,6 +2220,35 @@ h3 {
   font: inherit;
   font-size: 14px;
   resize: vertical;
+}
+
+.inquiry-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.inquiry-fields .note-field {
+  margin-bottom: 0;
+}
+
+.inquiry-error {
+  margin: -8px 0 20px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  font-size: 13.5px;
+}
+
+.inquiry-success h2 {
+  margin-bottom: 12px;
+}
+
+.inquiry-success p {
+  color: var(--body);
+  margin-bottom: 28px;
 }
 
 .modal-actions {
@@ -2450,6 +2480,10 @@ h3 {
 @media (max-width: 640px) {
   .wrapper {
     width: min(100% - 32px, var(--max));
+  }
+
+  .inquiry-fields {
+    grid-template-columns: 1fr;
   }
 
   .site-header {
