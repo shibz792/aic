@@ -1243,6 +1243,24 @@ h3 {
   height: 21px;
 }
 
+.solution-top i.icon-logo,
+.solution-chip i.icon-logo {
+  width: auto;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.solution-top i.icon-logo img,
+.solution-chip i.icon-logo img {
+  height: 100%;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  display: block;
+}
+
 .solution-system-chip {
   padding: 6px 14px;
   border-radius: 6px;

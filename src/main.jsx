@@ -13,6 +13,8 @@ const logoSrc = assetPath('aicatlyst-logo-true.png')
 const heroImageSrc = assetPath('hero-image.png')
 const contactImageSrc = assetPath('contact-image.png')
 const strategyImageSrc = assetPath('strategy-image.png')
+const esaveaiLogoSrc = assetPath('esaveai-logo.png')
+const aircallLogoSrc = assetPath('aircall-logo.svg')
 
 const routes = [
   ['Home', 'home'],
@@ -77,6 +79,8 @@ const solutions = [
   ['AIC Comms Grow', 'Comms Grow', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
   ['AIC Fin Master', 'Fin Master', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
   ['AIC Data Access', 'Data Access', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
+  ['eSave AI', 'eSave AI', 'AI-Powered Energy Cost & Emissions Reduction', 'Cuts wasted energy spend without new hardware or workflow disruption. The platform continuously analyzes building and facility usage patterns, automatically deploys efficiency improvements, and delivers 15-30% average savings backed by a guaranteed ROI. It tracks carbon emissions in real time and generates automated ESG compliance reporting, turning sustainability targets into measurable bottom-line results.', 'efficiency', esaveaiLogoSrc],
+  ['Aircall', 'Aircall', 'AI-Powered Business Phone & Call Handling', 'Replaces a fragmented phone stack with one modern communication system built for revenue and support teams. AI voice agents provide 24/7 coverage for routine and after-hours calls, real-time coaching and live transcription support agents mid-conversation, and every interaction syncs automatically back into your CRM. With 250+ native integrations, it keeps sales, support, and operations aligned without adding headcount.', 'efficiency', aircallLogoSrc],
 ]
 
 const solutionIcons = ['pipeline', 'media', 'web', 'lead', 'linkedin', 'memory', 'finance', 'search']
@@ -498,7 +502,9 @@ function SolutionsPreview({ openInquiry }) {
         <div className="solution-chip-grid">
           {solutions.map((item, index) => (
             <button type="button" className="solution-chip" key={item[0]} onClick={() => setActive(item)}>
-              <i><Icon name={solutionIcons[index] || 'node'} /></i>
+              <i className={item[5] ? 'icon-logo' : undefined}>
+                {item[5] ? <img src={item[5]} alt={`${item[0]} logo`} /> : <Icon name={solutionIcons[index] || 'node'} />}
+              </i>
               <strong>{item[0]}</strong>
               <em>{item[2]}</em>
               <b className="solution-chip-plus" aria-hidden="true">+</b>
@@ -530,14 +536,16 @@ function AdvisoryCard({ title, text, deliverable, index }) {
 }
 
 function SolutionCard({ item, index }) {
-  const [name, , purpose, text] = item
+  const [name, , purpose, text, , logo] = item
   const iconName = solutionIcons[index] || 'node'
   const [lead, rest] = splitLead(text)
 
   return (
     <article className="solution-card">
       <div className="solution-top">
-        <i><Icon name={iconName} /></i>
+        <i className={logo ? 'icon-logo' : undefined}>
+          {logo ? <img src={logo} alt={`${name} logo`} /> : <Icon name={iconName} />}
+        </i>
       </div>
       <h3>{name}</h3>
       <p className="solution-purpose-line">{purpose}</p>
@@ -593,8 +601,8 @@ function SolutionSelector() {
   const pressureMap = [
     ['Revenue', 'AIC Sales Grow, AIC Qual Leads, AIC Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
     ['Marketing', 'AIC Media Grow, AIC Web Moderniser', 'Campaign output', 'media'],
-    ['Operations', 'AIC Comms Grow, AIC Data Access', 'Workflow memory', 'workflow'],
-    ['Finance', 'AIC Fin Master', 'Expense control', 'finance'],
+    ['Operations', 'AIC Comms Grow, AIC Data Access, Aircall', 'Workflow memory', 'workflow'],
+    ['Finance', 'AIC Fin Master, eSave AI', 'Expense control', 'finance'],
   ]
 
   return (
