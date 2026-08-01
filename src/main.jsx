@@ -79,7 +79,7 @@ const solutions = [
   ['AIC Comms Grow', 'Comms Grow', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
   ['AIC Fin Master', 'Fin Master', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
   ['AIC Data Access', 'Data Access', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
-  ['eSave AI', 'eSave AI', 'AI-Powered Energy Cost & Emissions Reduction', 'Cuts wasted energy spend without new hardware or workflow disruption. The platform continuously analyzes building and facility usage patterns, automatically deploys efficiency improvements, and delivers 15-30% average savings backed by a guaranteed ROI. It tracks carbon emissions in real time and generates automated ESG compliance reporting, turning sustainability targets into measurable bottom-line results.', 'efficiency', esaveaiLogoSrc],
+  ['esave.ai', 'esave.ai', 'AI-Powered Energy Cost & Emissions Reduction', 'Cuts wasted energy spend without new hardware or workflow disruption. The platform continuously analyzes building and facility usage patterns, automatically deploys efficiency improvements, and delivers 15-30% average savings backed by a guaranteed ROI. It tracks carbon emissions in real time and generates automated ESG compliance reporting, turning sustainability targets into measurable bottom-line results.', 'efficiency', esaveaiLogoSrc],
   ['Aircall', 'Aircall', 'AI-Powered Business Phone & Call Handling', 'Replaces a fragmented phone stack with one modern communication system built for revenue and support teams. AI voice agents provide 24/7 coverage for routine and after-hours calls, real-time coaching and live transcription support agents mid-conversation, and every interaction syncs automatically back into your CRM. With 250+ native integrations, it keeps sales, support, and operations aligned without adding headcount.', 'efficiency', aircallLogoSrc],
 ]
 
@@ -602,7 +602,7 @@ function SolutionSelector() {
     ['Revenue', 'AIC Sales Grow, AIC Qual Leads, AIC Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
     ['Marketing', 'AIC Media Grow, AIC Web Moderniser', 'Campaign output', 'media'],
     ['Operations', 'AIC Comms Grow, AIC Data Access, Aircall', 'Workflow memory', 'workflow'],
-    ['Finance', 'AIC Fin Master, eSave AI', 'Expense control', 'finance'],
+    ['Finance', 'AIC Fin Master, esave.ai', 'Expense control', 'finance'],
   ]
 
   return (
