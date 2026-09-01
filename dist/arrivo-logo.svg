@@ -1,0 +1,11 @@
+<svg viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="arrivo-mark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="4" width="92" height="92" rx="26" fill="url(#arrivo-mark)" />
+  <text x="46" y="72" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="56" fill="#ffffff">A</text>
+  <text x="116" y="70" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="58" fill="#374151" letter-spacing="-1">Arrivo</text>
+</svg>

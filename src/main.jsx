@@ -15,6 +15,8 @@ const contactImageSrc = assetPath('contact-image.png')
 const strategyImageSrc = assetPath('strategy-image.png')
 const esaveaiLogoSrc = assetPath('esaveai-logo.png')
 const aircallLogoSrc = assetPath('aircall-logo.svg')
+const arrivoLogoSrc = assetPath('arrivo-logo.svg')
+const raechalaiLogoSrc = assetPath('raechalai-logo.png')
 
 const routes = [
   ['Home', 'home'],
@@ -76,11 +78,13 @@ const solutions = [
   ['AIC Web Moderniser', 'Web Moderniser', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
   ['AIC Qual Leads', 'Qual Leads', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.', 'growth'],
   ['AIC Lead Magnet LinkedIn', 'Lead Magnet LinkedIn', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.', 'growth'],
+  ['RaechalAI', 'RaechalAI', 'AI-Powered SEO & AI Search Visibility Automation', 'Turns weeks of SEO guesswork into an afternoon of approved fixes. The platform audits your site for technical and content gaps, drafts optimized copy and schema, and publishes straight to WordPress, Shopify, or Webflow once you sign off. It also tracks whether ChatGPT, Gemini, Perplexity, and Claude are citing your brand, closing the gap between traditional search rankings and visibility in AI answers without hiring a dedicated SEO team.', 'growth', raechalaiLogoSrc],
   ['AIC Comms Grow', 'Comms Grow', 'Searchable Corporate Memory & Task Tracker', 'Prevents crucial details and client decisions from vanishing the second a meeting ends. The system securely logs internal and external discussions to build a private, fully searchable memory engine for your managers. It automatically extracts project commitments, sets interactive tracking tasks, and ensures client handover data is never lost when staff members leave.', 'efficiency'],
   ['AIC Fin Master', 'Fin Master', 'Continuous Live Expense Auditing & Cash Flow Forecaster', 'Acts as a continuous Digital CFO to eliminate operational blindspots. The system scans bank accounts and financial entries every 6 hours to catch administrative overcharges or fraud immediately, alerts the team via Slack in plain English, runs advanced cash flow projections, and drafts professional, investor-ready updates in seconds.', 'efficiency'],
   ['AIC Data Access', 'Data Access', 'Real-Time Enterprise Answers & Search Hub', "Safely links your company's records, operational archives, and historical documentation into one clear interface. Allows leadership and staff to instantly search corporate information and pull up accurate, decision-ready answers in seconds, completely removing operational friction and saving hours of administrative searching.", 'efficiency'],
   ['esave.ai', 'esave.ai', 'AI-Powered Energy Cost & Emissions Reduction', 'Cuts wasted energy spend without new hardware or workflow disruption. The platform continuously analyzes building and facility usage patterns, automatically deploys efficiency improvements, and delivers 15-30% average savings backed by a guaranteed ROI. It tracks carbon emissions in real time and generates automated ESG compliance reporting, turning sustainability targets into measurable bottom-line results.', 'efficiency', esaveaiLogoSrc],
   ['Aircall', 'Aircall', 'AI-Powered Business Phone & Call Handling', 'Replaces a fragmented phone stack with one modern communication system built for revenue and support teams. AI voice agents provide 24/7 coverage for routine and after-hours calls, real-time coaching and live transcription support agents mid-conversation, and every interaction syncs automatically back into your CRM. With 250+ native integrations, it keeps sales, support, and operations aligned without adding headcount.', 'efficiency', aircallLogoSrc],
+  ['Arrivo', 'Arrivo', 'AI-Powered Visitor Check-In & Workforce Rostering', 'Replaces a manual front desk and paper sign-in sheets with one synced platform across kiosk, admin portal, and mobile app. Visitors check in via iPad or QR code in seconds, while managers get drag-and-drop rostering, one-tap leave approvals, and instant evacuation lists pulled from live attendance data. A built-in AI assistant answers day-to-day workplace questions in plain language, so front-of-house runs itself across single sites or multi-location teams.', 'efficiency', arrivoLogoSrc],
 ]
 
 const solutionIcons = ['pipeline', 'media', 'web', 'lead', 'linkedin', 'memory', 'finance', 'search']
@@ -333,6 +337,19 @@ function ContactFaq() {
   )
 }
 
+function HeroTestimonial() {
+  return (
+    <figure className="hero-testimonial">
+      <i className="hero-testimonial-mark"><Icon name="quote" /></i>
+      <blockquote>The AIC Catlyst team made our entire website transformation effortless. Not only does the new Home Loan Advocate site look incredible, but the turnaround speed and attention to detail exceeded all my expectations. They truly understand what a modern finance business needs to stand out. It has been a pleasure collaborating with a team that delivers top-tier quality so quickly.</blockquote>
+      <figcaption>
+        <strong>Malini Sivananthan</strong>
+        <span>Founder, Home Loan Advocate</span>
+      </figcaption>
+    </figure>
+  )
+}
+
 function Hero({ route, visual, compact = false, openInquiry }) {
   const page = meta[route]
   return (
@@ -358,6 +375,7 @@ function Hero({ route, visual, compact = false, openInquiry }) {
               </>
             )}
           </div>
+          {route === 'home' && <HeroTestimonial />}
         </div>
         <div className="hero-visual">{visual}</div>
       </div>
@@ -600,8 +618,8 @@ function SolutionsGroups() {
 function SolutionSelector() {
   const pressureMap = [
     ['Revenue', 'AIC Sales Grow, AIC Qual Leads, AIC Lead Magnet LinkedIn', 'Pipeline speed', 'pipeline'],
-    ['Marketing', 'AIC Media Grow, AIC Web Moderniser', 'Campaign output', 'media'],
-    ['Operations', 'AIC Comms Grow, AIC Data Access, Aircall', 'Workflow memory', 'workflow'],
+    ['Marketing', 'AIC Media Grow, AIC Web Moderniser, RaechalAI', 'Campaign output', 'media'],
+    ['Operations', 'AIC Comms Grow, AIC Data Access, Aircall, Arrivo', 'Workflow memory', 'workflow'],
     ['Finance', 'AIC Fin Master, esave.ai', 'Expense control', 'finance'],
   ]
 
@@ -721,6 +739,7 @@ function Icon({ name }) {
     workflow: <><path d="M5 6h5v5H5z" /><path d="M14 13h5v5h-5z" /><path d="M10 8h3a3 3 0 0 1 3 3v2" /></>,
     camera: <><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.4" /></>,
     spark: <path d="M12 2c.9 4.2 2.9 6.2 7 7-4.1.9-6.1 2.9-7 7-.9-4.1-2.9-6.1-7-7 4.1-.8 6.1-2.8 7-7Z" fill="currentColor" stroke="none" />,
+    quote: <><path d="M9.3 8C6.5 8 4 10.5 4 13.5V19h6v-6H7.2c0-2 1.2-3.2 3-3.5L9.3 8Z" fill="currentColor" stroke="none" /><path d="M19.3 8c-2.8 0-5.3 2.5-5.3 5.5V19h6v-6h-2.1c0-2 1.2-3.2 3-3.5L19.3 8Z" fill="currentColor" stroke="none" /></>,
     chevron: <path d="M6 9l6 6 6-6" />,
     arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   }
