@@ -9,14 +9,14 @@ const EMAILJS_PUBLIC_KEY = 'QF-nja7VZqVffH9T-'
 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY })
 const groupLine = 'A Knights Move Consulting Group Company'
 const assetPath = (path) => `${import.meta.env.BASE_URL}${path}`
-const logoSrc = assetPath('aicatlyst-logo-true.png')
-const heroImageSrc = assetPath('hero-image.png')
-const contactImageSrc = assetPath('contact-image.png')
-const strategyImageSrc = assetPath('strategy-image.png')
-const esaveaiLogoSrc = assetPath('esaveai-logo.png')
+const logoSrc = assetPath('aicatlyst-logo-true.webp')
+const heroImageSrc = assetPath('hero-image.webp')
+const contactImageSrc = assetPath('contact-image.webp')
+const strategyImageSrc = assetPath('strategy-image.webp')
+const esaveaiLogoSrc = assetPath('esaveai-logo.webp')
 const aircallLogoSrc = assetPath('aircall-logo.svg')
 const arrivoLogoSrc = assetPath('arrivo-logo.svg')
-const raechalaiLogoSrc = assetPath('raechalai-logo.png')
+const raechalaiLogoSrc = assetPath('raechalai-logo.webp')
 
 const routes = [
   ['Home', 'home'],
@@ -27,7 +27,8 @@ const routes = [
 
 const meta = {
   home: {
-    pageTitle: 'AI Catlyst | Home',
+    pageTitle: 'AI Catlyst | AI Strategy & Automation for ANZ Businesses',
+    metaDescription: 'AI Catlyst helps Australian and New Zealand businesses deploy crisis-proof AI strategy, operational efficiencies, and measurable ROI — fast, practical, and built to scale.',
     eyebrow: 'A Knights Move Consulting Group Company',
     title: 'Crisis-Proof Strategy. Exceptional Delivery. ',
     accent: 'Exponential Bottom-Line Growth.',
@@ -35,7 +36,8 @@ const meta = {
     cta: 'Talk to Our Experts',
   },
   strategy: {
-    pageTitle: 'AI Catlyst | Strategy',
+    pageTitle: 'AI Strategy & Roadmaps for ANZ Businesses | AI Catlyst',
+    metaDescription: 'Get a clear, capital-efficient AI roadmap built around your business. AI Catlyst designs strategy, governance, and deployment plans for Australia and New Zealand.',
     eyebrow: 'Your Business Growth with AI',
     title: 'Crisis-Proof, Future-Proof Application of AI for ',
     accent: 'Optimal Results.',
@@ -43,7 +45,8 @@ const meta = {
     cta: 'View solutions',
   },
   solutions: {
-    pageTitle: 'AI Catlyst | Solutions',
+    pageTitle: 'Ready-to-Deploy AI Solutions | AI Catlyst',
+    metaDescription: 'Explore ready-to-deploy AI systems for sales, marketing, finance, and operations — built for growing businesses across Australia and New Zealand.',
     eyebrow: 'Immediate Growth & Efficiencies',
     title: '',
     accent: 'Ready to Deploy Solutions',
@@ -51,7 +54,8 @@ const meta = {
     cta: 'Explore solutions',
   },
   contact: {
-    pageTitle: 'AI Catlyst | Contact',
+    pageTitle: 'Contact AI Catlyst | Talk to Our AI Strategy Experts',
+    metaDescription: 'Talk to AI Catlyst about AI strategy, automation, and growth systems for your business. Servicing Australia and New Zealand.',
     eyebrow: 'Contact Our Experts',
     title: '',
     accent: 'Take Action Today',
@@ -75,7 +79,7 @@ const advisory = [
 const solutions = [
   ['AIC Sales Grow', 'Sales Grow', 'Automated Sales Tracking & Lead Management', "Stops your sales team from wasting hours on manual CRM data entry. By securely connecting to your team's day-to-day communication stack, the system automatically reads incoming inquiries, creates customer profiles, scores lead interest, and instantly drafts tailored replies. It cuts down expensive software clutter and accelerates your pipeline without expanding headcount.", 'growth'],
   ['AIC Media Grow', 'Media Grow', 'Instant Marketing & Ad Creation', 'Replaces slow, high-cost marketing studio production with rapid, high-margin software processing power. Simply input a link to a high-performing industry benchmark, and the system forensically analyzes why it works, writing fresh scripts, generating realistic voiceovers, assembling video variations, and dropping production-ready drafts straight into your campaign ad manager instantly.', 'growth'],
-  ['AIC Web Moderniser', 'Web Moderniser', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
+  ['AIC Web Moderniser', 'Web Moderniser', 'Next-Gen B2B Website Redesign & Optimization', 'Transforms your slow corporate website into a premium, high-converting digital storefront built for the Australian and New Zealand market. Engineered to strip out clunky legacy code, implement lightning-fast layouts, and map smart customer journeys that turn casual clicks into immediate, qualified business leads without relying on ongoing developer fees.', 'growth'],
   ['AIC Qual Leads', 'Qual Leads', 'Automated High-Conversion Lead Generation', 'Delivers ready-to-buy prospects straight to your pipeline without the stress of cold-calling. Once you input your exact target profile and highly convertible audience parameters, the system automatically crawls public records, open networks, and business indices to filter out noise, providing fully verified, highly qualified sales leads built to convert immediately.', 'growth'],
   ['AIC Lead Magnet LinkedIn', 'Lead Magnet LinkedIn', 'LinkedIn Outreach & Social Selling Automation', 'Builds a high-volume LinkedIn prospecting engine for B2B teams. The system organizes audience targeting, AI-personalized outreach, campaign sequencing, reply management, performance analytics, A/B testing, and CRM handoff so your pipeline grows without manual profile-by-profile chasing.', 'growth'],
   ['RaechalAI', 'RaechalAI', 'AI-Powered SEO & AI Search Visibility Automation', 'Turns weeks of SEO guesswork into an afternoon of approved fixes. The platform audits your site for technical and content gaps, drafts optimized copy and schema, and publishes straight to WordPress, Shopify, or Webflow once you sign off. It also tracks whether ChatGPT, Gemini, Perplexity, and Claude are citing your brand, closing the gap between traditional search rankings and visibility in AI answers without hiring a dedicated SEO team.', 'growth', raechalaiLogoSrc],
@@ -107,9 +111,16 @@ function splitList(text) {
 }
 
 function getRoute() {
-  const slug = window.location.hash.replace('#/', '').replace('#', '').split('?')[0] || 'home'
+  const slug = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'home'
   if (slug === 'platform') return 'strategy'
   return meta[slug] ? slug : 'home'
+}
+
+function routeHref(slug) {
+  // Routes are prerendered to real static directories (dist/strategy/index.html,
+  // etc.) — link with the trailing slash so Apache serves them directly instead
+  // of issuing a 301 redirect to add it.
+  return slug === 'home' ? '/' : `/${slug}/`
 }
 
 function useInView(threshold = 0.2) {
@@ -159,19 +170,45 @@ function App() {
   const activeMeta = meta[route]
 
   useEffect(() => {
-    const onHash = () => {
+    const onPop = () => {
       setRoute(getRoute())
       setMenuOpen(false)
       window.scrollTo({ top: 0, behavior: 'instant' })
     }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    window.addEventListener('popstate', onPop)
+
+    const onClick = (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+      const link = event.target.closest('a')
+      if (!link || link.target === '_blank' || link.hasAttribute('download') || link.hasAttribute('data-external')) return
+      const url = new URL(link.href, window.location.href)
+      if (url.origin !== window.location.origin || url.pathname === window.location.pathname) return
+      event.preventDefault()
+      window.history.pushState({}, '', url.pathname)
+      setRoute(getRoute())
+      setMenuOpen(false)
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
+    document.addEventListener('click', onClick)
+
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      document.removeEventListener('click', onClick)
+    }
   }, [])
 
   useEffect(() => {
     document.title = activeMeta.pageTitle
-    document.querySelector('meta[name="description"]')?.setAttribute('content', activeMeta.text)
-  }, [activeMeta])
+    document.querySelector('meta[name="description"]')?.setAttribute('content', activeMeta.metaDescription || activeMeta.text)
+
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', `https://aicatlyst.com${routeHref(route)}`)
+  }, [route, activeMeta])
 
   const openInquiry = (solution = '') => {
     setInitialInquirySolution(solution)
@@ -213,11 +250,11 @@ function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
   return (
     <>
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
-        <a className={`brand ${active === 'home' ? 'brand-home' : ''}`} href="#/home" aria-label="AI Catlyst home">
+        <a className={`brand ${active === 'home' ? 'brand-home' : ''}`} href="/" aria-label="AI Catlyst home">
           <img src={logoSrc} alt="AI Catlyst" className="brand-mark" width="220" height="61" loading="eager" decoding="async" />
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {routes.map(([label, slug]) => <a key={slug} className={active === slug ? 'active' : ''} href={`#/${slug}`}>{label}</a>)}
+          {routes.map(([label, slug]) => <a key={slug} className={active === slug ? 'active' : ''} href={routeHref(slug)}>{label}</a>)}
         </nav>
         <div className="header-action">
           <span>Driving Growth & Efficiencies with AI</span>
@@ -235,7 +272,7 @@ function Header({ active, menuOpen, setMenuOpen, openInquiry }) {
           <div className="mobile-logo">
             <img src={logoSrc} alt="AI Catlyst" width="200" height="55" loading="lazy" decoding="async" />
           </div>
-          {routes.map(([label, slug]) => <a key={slug} href={`#/${slug}`}>{label}</a>)}
+          {routes.map(([label, slug]) => <a key={slug} href={routeHref(slug)}>{label}</a>)}
           <button type="button" className="button primary" onClick={openMobileInquiry}>Contact experts</button>
         </div>
       )}
@@ -300,8 +337,67 @@ function ContactPage({ openInquiry }) {
   return (
     <>
       <Hero route="contact" visual={<ContactVisual />} openInquiry={openInquiry} compact />
+      <ContactForm />
       <ContactFaq />
     </>
+  )
+}
+
+function ContactForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [note, setNote] = useState('')
+  const [status, setStatus] = useState('idle')
+
+  const submit = (event) => {
+    event.preventDefault()
+    setStatus('sending')
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name,
+      from_email: email,
+      solutions: 'Not specified (general enquiry)',
+      notes: note.trim() || 'No additional notes added.',
+    }).then(() => {
+      setStatus('sent')
+    }).catch(() => {
+      setStatus('error')
+    })
+  }
+
+  return (
+    <section className="section contact-form-section">
+      <div className="wrapper">
+        {status === 'sent' ? (
+          <div className="contact-form-panel contact-form-success">
+            <h2>Message sent.</h2>
+            <p>Thanks, {name || 'there'} — we&rsquo;ve received your enquiry and will be in touch shortly.</p>
+          </div>
+        ) : (
+          <form className="contact-form-panel" onSubmit={submit}>
+            <h2>Send us a message</h2>
+            <p>Tell us where the pressure sits in your business, and we&rsquo;ll get back to you directly.</p>
+            <div className="inquiry-fields">
+              <label className="note-field">
+                <span>Your name</span>
+                <input type="text" value={name} onChange={(event) => setName(event.target.value)} required placeholder="Jane Smith" />
+              </label>
+              <label className="note-field">
+                <span>Your email</span>
+                <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required placeholder="jane@company.com" />
+              </label>
+            </div>
+            <label className="note-field">
+              <span>Message</span>
+              <textarea value={note} onChange={(event) => setNote(event.target.value)} rows="5" required placeholder="Tell us what you want to improve, automate, or understand first." />
+            </label>
+            {status === 'error' && <p className="inquiry-error">Something went wrong sending your message. Please try again, or email us directly.</p>}
+            <button className="button primary" type="submit" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending…' : 'Send message'}
+            </button>
+          </form>
+        )}
+      </div>
+    </section>
   )
 }
 
@@ -365,13 +461,13 @@ function Hero({ route, visual, compact = false, openInquiry }) {
           <p>{page.text}</p>
           <div className="actions">
             {route === 'strategy' ? (
-              <a className="button primary" href="#/solutions">View solutions</a>
+              <a className="button primary" href="/solutions/">View solutions</a>
             ) : route === 'solutions' ? (
               <button className="button primary" type="button" onClick={() => openInquiry()}>Talk to experts</button>
             ) : (
               <>
                 <button className="button primary" type="button" onClick={() => openInquiry()}>{page.cta}</button>
-                <a className="button secondary" href="#/solutions">View solutions</a>
+                <a className="button secondary" href="/solutions/">View solutions</a>
               </>
             )}
           </div>
@@ -515,7 +611,7 @@ function SolutionsPreview({ openInquiry }) {
       <div className="wrapper">
         <div className="section-split">
           <SectionHeader title="Ready to Deploy Solutions" text="Strategy handles the complex architecture; our ready-to-run solutions deliver immediate, practical outcomes. Tap a system to see what it does." />
-          <a className="button secondary" href="#/solutions">Explore all systems</a>
+          <a className="button secondary" href="/solutions/">Explore all systems</a>
         </div>
         <div className="solution-chip-grid">
           {solutions.map((item, index) => (
@@ -1022,15 +1118,15 @@ function Footer({ openInquiry }) {
             <img src={logoSrc} alt="AI Catlyst" width="170" height="47" loading="lazy" decoding="async" />
           </div>
           <p>{groupLine}</p>
-          <p>Driving Growth & Efficiencies with AI for businesses that need practical strategy, rapid deployment, and measurable bottom-line outcomes.</p>
+          <p>Driving Growth & Efficiencies with AI for businesses across Australia and New Zealand that need practical strategy, rapid deployment, and measurable bottom-line outcomes.</p>
         </div>
         <nav aria-label="Footer navigation">
           <span>Explore</span>
-          {routes.map(([label, slug]) => <a key={slug} href={`#/${slug}`}>{label}</a>)}
+          {routes.map(([label, slug]) => <a key={slug} href={routeHref(slug)}>{label}</a>)}
         </nav>
         <nav aria-label="Footer solutions">
           <span>Solutions</span>
-          {solutions.slice(0, 5).map(([name]) => <a key={name} href="#/solutions">{name}</a>)}
+          {solutions.slice(0, 5).map(([name]) => <a key={name} href="/solutions/">{name}</a>)}
         </nav>
         <div className="footer-contact">
           <span>Get in touch</span>
@@ -1046,4 +1142,10 @@ function Footer({ openInquiry }) {
   )
 }
 
+// Pages ship with prerendered markup baked in at build time (see
+// scripts/prerender.mjs) so crawlers and first paint see real content
+// instead of a blank shell. It's a browser-rendered snapshot rather than
+// true server-rendered markup, so it doesn't carry React's hydration
+// markers — we mount fresh on top of it (an imperceptible swap) rather
+// than hydrateRoot, which would misread the snapshot as a mismatch.
 createRoot(document.getElementById('root')).render(<App />)
