@@ -366,7 +366,7 @@ function ContactForm() {
 
   return (
     <section className="section contact-form-section">
-      <div className="wrapper">
+      <div className="wrapper contact-form-grid">
         {status === 'sent' ? (
           <div className="contact-form-panel contact-form-success">
             <h2>Message sent.</h2>
@@ -396,6 +396,30 @@ function ContactForm() {
             </button>
           </form>
         )}
+        <aside className="contact-details-panel">
+          <h3>Reach us directly</h3>
+          <a className="contact-detail-row" href="tel:+64273377500">
+            <Icon name="phone" /> 027 337 7500
+          </a>
+          <a
+            className="contact-detail-row"
+            href="https://www.google.com/maps/search/?api=1&query=8+Harley+Road,+Hauraki,+Auckland+0622"
+            target="_blank"
+            rel="noreferrer"
+            data-external
+          >
+            <Icon name="pin" /> 8 Harley Road, Hauraki, Auckland 0622
+          </a>
+          <a
+            className="contact-detail-row"
+            href="https://www.linkedin.com/company/ai-catlyst/"
+            target="_blank"
+            rel="noreferrer"
+            data-external
+          >
+            <Icon name="linkedin" /> LinkedIn
+          </a>
+        </aside>
       </div>
     </section>
   )
@@ -836,6 +860,8 @@ function Icon({ name }) {
     camera: <><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.4" /></>,
     spark: <path d="M12 2c.9 4.2 2.9 6.2 7 7-4.1.9-6.1 2.9-7 7-.9-4.1-2.9-6.1-7-7 4.1-.8 6.1-2.8 7-7Z" fill="currentColor" stroke="none" />,
     quote: <><path d="M9.3 8C6.5 8 4 10.5 4 13.5V19h6v-6H7.2c0-2 1.2-3.2 3-3.5L9.3 8Z" fill="currentColor" stroke="none" /><path d="M19.3 8c-2.8 0-5.3 2.5-5.3 5.5V19h6v-6h-2.1c0-2 1.2-3.2 3-3.5L19.3 8Z" fill="currentColor" stroke="none" /></>,
+    phone: <path d="M5 4h3l1.5 4.5-2 1.5a12 12 0 0 0 6.5 6.5l1.5-2L19 16v3a1 1 0 0 1-1 1C11.5 20 4 12.5 4 6a1 1 0 0 1 1-1Z" />,
+    pin: <><path d="M12 21s7-6.5 7-11.5a7 7 0 0 0-14 0C5 14.5 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></>,
     chevron: <path d="M6 9l6 6 6-6" />,
     arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   }
@@ -1131,6 +1157,18 @@ function Footer({ openInquiry }) {
         <div className="footer-contact">
           <span>Get in touch</span>
           <button type="button" onClick={() => openInquiry()}>Talk to Our Experts</button>
+          <a className="footer-social-link" href="tel:+64273377500">
+            <Icon name="phone" /> 027 337 7500
+          </a>
+          <a
+            className="footer-social-link"
+            href="https://www.google.com/maps/search/?api=1&query=8+Harley+Road,+Hauraki,+Auckland+0622"
+            target="_blank"
+            rel="noreferrer"
+            data-external
+          >
+            <Icon name="pin" /> 8 Harley Road, Hauraki, Auckland 0622
+          </a>
           <a
             className="footer-social-link"
             href="https://www.linkedin.com/company/ai-catlyst/"
