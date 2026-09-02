@@ -1131,6 +1131,16 @@ function Footer({ openInquiry }) {
         <div className="footer-contact">
           <span>Get in touch</span>
           <button type="button" onClick={() => openInquiry()}>Talk to Our Experts</button>
+          <a
+            className="footer-social-link"
+            href="https://www.linkedin.com/company/ai-catlyst/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="AI Catlyst on LinkedIn"
+            data-external
+          >
+            <Icon name="linkedin" /> LinkedIn
+          </a>
         </div>
       </div>
       <div className="wrapper footer-legal">
