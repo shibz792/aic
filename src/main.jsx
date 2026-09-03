@@ -1,6 +1,24 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import emailjs from '@emailjs/browser'
+import {
+  Filter as LucideFilter,
+  Clapperboard as LucideClapperboard,
+  Globe as LucideGlobe,
+  UserPlus as LucideUserPlus,
+  Brain as LucideBrain,
+  LineChart as LucideLineChart,
+  Search as LucideSearch,
+  BadgeCheck as LucideBadgeCheck,
+  Network as LucideNetwork,
+  ShieldCheck as LucideShieldCheck,
+  Target as LucideTarget,
+  Workflow as LucideWorkflow,
+  Sparkles as LucideSparkles,
+  Quote as LucideQuote,
+  Phone as LucidePhone,
+  MapPin as LucideMapPin,
+} from 'lucide-react'
 import './styles.css'
 
 const EMAILJS_SERVICE_ID = 'service_qfxq99o'
@@ -157,6 +175,8 @@ function AmbientBackground() {
       <span className="ambient-blob ambient-a" />
       <span className="ambient-blob ambient-b" />
       <span className="ambient-blob ambient-c" />
+      <span className="ambient-blob ambient-d" />
+      <span className="ambient-blob ambient-e" />
     </div>
   )
 }
@@ -195,6 +215,25 @@ function App() {
       window.removeEventListener('popstate', onPop)
       document.removeEventListener('click', onClick)
     }
+  }, [])
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+    let activeCard = null
+    const onMove = (event) => {
+      const card = event.target.closest('.solution-card, .advisory-card, .governance-pillar, .solution-chip')
+      if (card !== activeCard) {
+        activeCard?.style.removeProperty('--mx')
+        activeCard?.style.removeProperty('--my')
+        activeCard = card
+      }
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`)
+    }
+    document.addEventListener('pointermove', onMove)
+    return () => document.removeEventListener('pointermove', onMove)
   }, [])
 
   useEffect(() => {
@@ -841,31 +880,42 @@ function SolutionsCta({ openInquiry }) {
   )
 }
 
+const iconMap = {
+  pipeline: LucideFilter,
+  media: LucideClapperboard,
+  web: LucideGlobe,
+  lead: LucideUserPlus,
+  memory: LucideBrain,
+  finance: LucideLineChart,
+  search: LucideSearch,
+  check: LucideBadgeCheck,
+  node: LucideNetwork,
+  shield: LucideShieldCheck,
+  target: LucideTarget,
+  workflow: LucideWorkflow,
+  spark: LucideSparkles,
+  quote: LucideQuote,
+  phone: LucidePhone,
+  pin: LucideMapPin,
+}
+
+// LinkedIn is a trademarked brand mark, not a generic UI glyph, so it's kept
+// as a hand-drawn "in" badge rather than pulled from the icon library.
+function LinkedinMark(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M5 9v10" />
+      <path d="M5 5v.01" />
+      <path d="M10 19v-7c0-2 1.2-3 3-3s3 1.2 3 3v7" />
+      <path d="M10 9v10" />
+    </svg>
+  )
+}
+
 function Icon({ name }) {
-  const common = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' }
-  const paths = {
-    pipeline: <><path d="M4 6h5l2 3h9" /><path d="M4 18h5l2-3h9" /><path d="M4 12h16" /></>,
-    media: <><path d="M5 5h14v14H5z" /><path d="m10 9 5 3-5 3z" /></>,
-    web: <><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c3 3 3 15 0 18" /><path d="M12 3c-3 3-3 15 0 18" /></>,
-    lead: <><path d="M4 19c1.8-4 5-6 8-6s6.2 2 8 6" /><circle cx="12" cy="8" r="4" /><path d="m17 5 2-2" /></>,
-    linkedin: <><path d="M5 9v10" /><path d="M5 5v.01" /><path d="M10 19v-7c0-2 1.2-3 3-3s3 1.2 3 3v7" /><path d="M10 9v10" /></>,
-    memory: <><path d="M8 4h8v16H8z" /><path d="M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4" /></>,
-    finance: <><path d="M4 18V6" /><path d="M4 18h16" /><path d="m7 15 3-4 3 2 4-6" /></>,
-    search: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4 4" /><path d="M8 10h5" /></>,
-    check: <><path d="m5 12 4 4L19 6" /></>,
-    node: <><circle cx="6" cy="12" r="2" /><circle cx="18" cy="6" r="2" /><circle cx="18" cy="18" r="2" /><path d="m8 11 8-4" /><path d="m8 13 8 4" /></>,
-    shield: <><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z" /><path d="m9 12 2 2 4-5" /></>,
-    target: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3" /></>,
-    workflow: <><path d="M5 6h5v5H5z" /><path d="M14 13h5v5h-5z" /><path d="M10 8h3a3 3 0 0 1 3 3v2" /></>,
-    camera: <><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.4" /></>,
-    spark: <path d="M12 2c.9 4.2 2.9 6.2 7 7-4.1.9-6.1 2.9-7 7-.9-4.1-2.9-6.1-7-7 4.1-.8 6.1-2.8 7-7Z" fill="currentColor" stroke="none" />,
-    quote: <><path d="M9.3 8C6.5 8 4 10.5 4 13.5V19h6v-6H7.2c0-2 1.2-3.2 3-3.5L9.3 8Z" fill="currentColor" stroke="none" /><path d="M19.3 8c-2.8 0-5.3 2.5-5.3 5.5V19h6v-6h-2.1c0-2 1.2-3.2 3-3.5L19.3 8Z" fill="currentColor" stroke="none" /></>,
-    phone: <path d="M5 4h3l1.5 4.5-2 1.5a12 12 0 0 0 6.5 6.5l1.5-2L19 16v3a1 1 0 0 1-1 1C11.5 20 4 12.5 4 6a1 1 0 0 1 1-1Z" />,
-    pin: <><path d="M12 21s7-6.5 7-11.5a7 7 0 0 0-14 0C5 14.5 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></>,
-    chevron: <path d="M6 9l6 6 6-6" />,
-    arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
-  }
-  return <svg className="icon" {...common}>{paths[name] || paths.node}</svg>
+  if (name === 'linkedin') return <LinkedinMark className="icon" aria-hidden="true" />
+  const IconComponent = iconMap[name] || LucideNetwork
+  return <IconComponent className="icon" strokeWidth={1.75} aria-hidden="true" />
 }
 
 function HomeVisual() {
@@ -885,45 +935,63 @@ function StrategyVisual() {
 }
 
 function SystemsMap() {
-  const growthCount = solutions.filter(([, , , , tone]) => tone === 'growth').length
-  const efficiencyCount = solutions.length - growthCount
+  const preview = solutions.slice(0, 5)
   return (
-    <div className="visual-panel systems-growth">
+    <div className="visual-panel systems-console">
       <div className="growth-header">
         <span className="growth-header-icon"><Icon name="spark" /></span>
-        AI Systems Impact
+        Deployment status
       </div>
-      <div className="growth-chart">
-        {solutions.map(([name, , , , tone], index) => (
-          <span
-            key={name}
-            className={`growth-bar tone-${tone}`}
-            style={{ '--h': `${34 + index * 8}%`, '--i': index }}
-          />
+      <div className="console-list">
+        {preview.map(([name, , purpose, , tone], index) => (
+          <div className={`console-row tone-${tone}`} key={name} style={{ '--i': index }}>
+            <span className="console-status" />
+            <div className="console-copy">
+              <strong className="console-name">{name}</strong>
+              <small className="console-purpose">{purpose}</small>
+            </div>
+            <span className="console-tag">Live</span>
+          </div>
         ))}
-      </div>
-      <div className="growth-legend">
-        <span className="legend-item tone-growth" style={{ flex: growthCount }}><i />Growth</span>
-        <span className="legend-item tone-efficiency" style={{ flex: efficiencyCount }}><i />Efficiency</span>
       </div>
     </div>
   )
 }
 
+// Rounded elbow connector (drop → bend → run → bend → drop), like a circuit
+// trace, instead of a raw diagonal line — reads as engineered, not sketched.
+function elbowPath(x1, y1, x2, y2) {
+  const bendY = (y1 + y2) / 2
+  const r = Math.min(9, Math.abs(x2 - x1) / 2)
+  const dir = x2 > x1 ? 1 : x2 < x1 ? -1 : 0
+  if (dir === 0 || r < 1) return `M${x1},${y1} L${x2},${y2}`
+  return `M${x1},${y1} L${x1},${bendY - r} Q${x1},${bendY} ${x1 + dir * r},${bendY} L${x2 - dir * r},${bendY} Q${x2},${bendY} ${x2},${bendY + r} L${x2},${y2}`
+}
+
 function FlowFan({ points, direction }) {
+  // The SVG stretches non-uniformly to fill its box (preserveAspectRatio
+  // "none"), which is fine for line paths but would distort <circle> nodes
+  // into ellipses — so the connector dots are plain HTML, positioned by the
+  // same percentages, sitting on top of the SVG instead of inside it.
+  const outerY = direction === 'in' ? '3%' : '97%'
+  const coreY = direction === 'in' ? '97%' : '3%'
   return (
     <div className="flow-fan" aria-hidden="true">
       <svg viewBox="0 0 100 64" preserveAspectRatio="none">
         {points.map((x, index) => {
-          const d = direction === 'in' ? `M${x},0 L50,64` : `M50,0 L${x},64`
+          const d = direction === 'in' ? elbowPath(x, 2, 50, 62) : elbowPath(50, 2, x, 62)
           return (
             <g key={x}>
               <path className="flow-fan-track" d={d} vectorEffect="non-scaling-stroke" />
-              <path className="flow-fan-pulse" d={d} vectorEffect="non-scaling-stroke" style={{ animationDelay: `${index * 0.18}s` }} />
+              <path className="flow-fan-pulse" d={d} vectorEffect="non-scaling-stroke" style={{ animationDelay: `${index * 0.22}s` }} />
             </g>
           )
         })}
       </svg>
+      {points.map((x) => (
+        <i key={x} className="flow-fan-node" style={{ left: `${x}%`, top: outerY }} />
+      ))}
+      <i className="flow-fan-node flow-fan-node-core" style={{ left: '50%', top: coreY }} />
     </div>
   )
 }
@@ -943,7 +1011,9 @@ function StrategyDecisionMatrix() {
       </div>
       <FlowFan points={inXs} direction="in" />
       <div className="cockpit-core">
-        <Icon name="target" />
+        <span className="cockpit-core-ring" aria-hidden="true">
+          <Icon name="target" />
+        </span>
         <strong>Roadmap engine</strong>
         <small>ranked investment sequence</small>
       </div>
