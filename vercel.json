@@ -1,0 +1,4 @@
+{
+  "buildCommand": "echo 'Using the pre-built dist/ already committed to the repo (built + prerendered locally via npm run build).'",
+  "outputDirectory": "dist"
+}
