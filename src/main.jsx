@@ -33,7 +33,6 @@ const contactImageSrc = assetPath('contact-image.webp')
 const strategyImageSrc = assetPath('strategy-image.webp')
 const esaveaiLogoSrc = assetPath('esaveai-logo.webp')
 const aircallLogoSrc = assetPath('aircall-logo.svg')
-const aircallLogoWhiteSrc = assetPath('aircall-logo-white.svg')
 const arrivoLogoSrc = assetPath('arrivo-logo.svg')
 const raechalaiLogoSrc = assetPath('raechalai-logo.webp')
 
@@ -1239,11 +1238,13 @@ function InquiryModal({ open, initialSolution, onClose }) {
 // ---------------------------------------------------------------------------
 // VIP event landing page, standalone and unlisted (see meta['vip-evening'] and
 // the App() route branch for how it's kept out of nav/sitemap/search).
-// Branded Aircall x AI Catlyst (Aircall leads the lockup). Written and styled
-// to read as an actual invitation: the event name is the centrepiece, the
-// language is formal rather than marketing copy, and the layout is a quiet
-// dark editorial page (hairline rules, a serif voice, no icon-badge grids)
-// rather than a stack of SaaS feature cards.
+// Branded Aircall x AI Catlyst (Aircall leads the lockup, both logos used
+// as-is, no recoloring). Written and styled to read as an actual invitation:
+// the event name is the centrepiece, the language is formal rather than
+// marketing copy, sections alternate between a dark navy editorial mode and
+// a light paper mode, and lists are hairline-divided rather than icon-badge
+// grids. RSVP always opens the Zoho form in a new tab; nothing is embedded
+// in-page.
 // ---------------------------------------------------------------------------
 
 const VIP_RSVP_URL = 'https://forms.zohopublic.com.au/aicsupport1aica1/form/TheModernRevOpsVoiceIntelligenceVIPEvening/formperma/xNioetQGv1R0l2-Ggc8smiQFh8tyK5th-HpfhnLnenI'
@@ -1266,12 +1267,9 @@ const vipDemoTopics = [
   ['Conversation visibility', 'Real oversight across sales and service conversations, not just what gets typed up.'],
 ]
 
-// Every CTA on the page scrolls to the embedded form at #rsvp rather than
-// opening a new tab. That is deliberate: a funnel page keeps the visitor on
-// one continuous page through to conversion instead of handing them off.
 function VipRsvpButton({ children, className = '' }) {
   return (
-    <a className={`button primary vip-btn ${className}`} href="#rsvp">
+    <a className={`button primary vip-btn ${className}`} href={VIP_RSVP_URL} target="_blank" rel="noreferrer" data-external>
       {children}
     </a>
   )
@@ -1280,7 +1278,7 @@ function VipRsvpButton({ children, className = '' }) {
 function VipBrandLockup() {
   return (
     <div className="vip-brand-lockup">
-      <img src={aircallLogoWhiteSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="100" height="28" loading="eager" decoding="async" />
+      <img src={aircallLogoSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="100" height="28" loading="eager" decoding="async" />
       <span className="vip-brand-x" aria-hidden="true">×</span>
       <img src={logoSrc} alt="AI Catlyst" className="vip-brand-logo" width="116" height="32" loading="eager" decoding="async" />
     </div>
@@ -1451,23 +1449,14 @@ function VipEventDetails() {
 
 function VipClosingCta() {
   return (
-    <section className="vip-section vip-closing" id="rsvp">
+    <section className="vip-section vip-closing">
       <div className="vip-section-inner vip-closing-inner">
         <p className="vip-preline">You are invited to</p>
-        <h2 className="vip-h2 vip-h2-serif vip-h2-light">The Modern RevOps &amp; Voice Intelligence VIP Evening</h2>
+        <h2 className="vip-h2">The Modern RevOps &amp; Voice Intelligence VIP Evening</h2>
         <VipOrnament />
         <p>Thursday, 15 October 2026. The Churchill Room, The Fox, Auckland CBD.</p>
-        <div className="vip-rsvp-frame">
-          <iframe
-            src={VIP_RSVP_URL}
-            title="RSVP form: The Modern RevOps & Voice Intelligence VIP Evening"
-            loading="lazy"
-          />
-        </div>
-        <p className="vip-hero-note vip-hero-note-light">
-          Submitting the form above confirms your place. Trouble loading it?{' '}
-          <a href={VIP_RSVP_URL} target="_blank" rel="noreferrer" data-external>Open it in a new tab</a>.
-        </p>
+        <VipRsvpButton className="vip-btn-lg">Reserve Your Place</VipRsvpButton>
+        <span className="vip-hero-note">RSVP takes you to our secure registration form. Your place is confirmed once you submit it.</span>
       </div>
     </section>
   )
@@ -1506,21 +1495,7 @@ function VipStickyBar() {
   )
 }
 
-const VIP_FONT_HREF = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&display=swap'
-
 function VipEveningPage() {
-  // This page's serif accent is only used here, so the font is loaded only
-  // on this route rather than added to the site-wide stylesheet import
-  // (which would make every other page fetch an unused font).
-  useEffect(() => {
-    if (document.querySelector(`link[href="${VIP_FONT_HREF}"]`)) return undefined
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = VIP_FONT_HREF
-    document.head.appendChild(link)
-    return () => link.remove()
-  }, [])
-
   return (
     <>
       <VipHeader />
