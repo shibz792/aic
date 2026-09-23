@@ -24,6 +24,9 @@ const routes = [
   { path: '/strategy', out: 'strategy/index.html', navText: 'Strategy' },
   { path: '/solutions', out: 'solutions/index.html', navText: 'Solutions' },
   { path: '/contact', out: 'contact/index.html', navText: 'Contact' },
+  // Standalone, unlisted — not in nav, so it's reached by direct URL below
+  // instead of a nav click.
+  { path: '/vip-evening', out: 'vip-evening/index.html', navText: null },
 ]
 
 const MIME = {
@@ -66,6 +69,8 @@ async function main() {
         (text) => document.title.includes(text) || true,
         route.navText,
       )
+    } else if (route.path !== '/') {
+      await page.goto(`http://127.0.0.1:${port}${route.path}`, { waitUntil: 'networkidle' })
     }
     // Let the route settle: title/meta effect + above-fold reveal observers.
     await page.waitForTimeout(400)

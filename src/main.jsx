@@ -18,6 +18,21 @@ import {
   Quote as LucideQuote,
   Phone as LucidePhone,
   MapPin as LucideMapPin,
+  PhoneMissed as LucidePhoneMissed,
+  Clock as LucideClock,
+  Puzzle as LucidePuzzle,
+  EyeOff as LucideEyeOff,
+  Mic as LucideMic,
+  Route as LucideRoute,
+  ClipboardList as LucideClipboardList,
+  Link2 as LucideLink2,
+  Eye as LucideEye,
+  MonitorPlay as LucideMonitorPlay,
+  Users as LucideUsers,
+  Handshake as LucideHandshake,
+  CalendarDays as LucideCalendarDays,
+  ArrowRight as LucideArrowRight,
+  Wine as LucideWine,
 } from 'lucide-react'
 import './styles.css'
 
@@ -79,6 +94,16 @@ const meta = {
     accent: 'Take Action Today',
     text: 'Speak with our experts and find out how we can simplify your operations, reduce pressure, and support smarter growth.',
     cta: 'Talk to Our Experts',
+  },
+  // Standalone event landing page — reachable only via direct link, not part
+  // of site navigation and not linked from any other page (see App(), where
+  // this route skips the shared Header/Footer/InquiryModal entirely) and
+  // deliberately left out of sitemap.xml. noindex below keeps it out of
+  // search results too, matching the invite-only nature of the event.
+  'vip-evening': {
+    pageTitle: 'The Modern RevOps & Voice Intelligence VIP Evening | AI Catlyst × Aircall',
+    metaDescription: 'A private Auckland evening with AI Catlyst and Aircall: live AI voice agents, call intelligence, and RevOps demonstrations for founders and business leaders. Thursday 15 October, The Fox, Auckland CBD.',
+    robots: 'noindex, follow',
   },
 }
 
@@ -237,22 +262,42 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const description = activeMeta.metaDescription || activeMeta.text
     document.title = activeMeta.pageTitle
-    document.querySelector('meta[name="description"]')?.setAttribute('content', activeMeta.metaDescription || activeMeta.text)
+    document.querySelector('meta[name="description"]')?.setAttribute('content', description)
+    document.querySelector('meta[name="robots"]')?.setAttribute('content', activeMeta.robots || 'index, follow')
 
+    const canonicalUrl = `https://aicatlyst.com${routeHref(route)}`
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) {
       canonical = document.createElement('link')
       canonical.setAttribute('rel', 'canonical')
       document.head.appendChild(canonical)
     }
-    canonical.setAttribute('href', `https://aicatlyst.com${routeHref(route)}`)
+    canonical.setAttribute('href', canonicalUrl)
+
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', activeMeta.pageTitle)
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description)
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl)
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', activeMeta.pageTitle)
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description)
   }, [route, activeMeta])
 
   const openInquiry = (solution = '') => {
     setInitialInquirySolution(solution)
     setInquiryVersion((version) => version + 1)
     setInquiryOpen(true)
+  }
+
+  if (route === 'vip-evening') {
+    // Standalone event page: no site header/nav, no footer, no inquiry
+    // modal — a single-purpose page with its own minimal chrome, reachable
+    // only by direct link.
+    return (
+      <div className="site-shell vip-shell">
+        <VipEveningPage />
+      </div>
+    )
   }
 
   return (
@@ -1202,6 +1247,251 @@ function InquiryModal({ open, initialSolution, onClose }) {
         </div>
       </form>
     </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// VIP event landing page — standalone, unlisted (see meta['vip-evening'] and
+// the App() route branch for how it's kept out of nav/sitemap/search).
+// ---------------------------------------------------------------------------
+
+const VIP_RSVP_URL = 'https://forms.zohopublic.com.au/aicsupport1aica1/form/TheModernRevOpsVoiceIntelligenceVIPEvening/formperma/xNioetQGv1R0l2-Ggc8smiQFh8tyK5th-HpfhnLnenI'
+
+const vipProblems = [
+  [LucidePhoneMissed, 'Missed calls, missed revenue', 'Every unanswered enquiry is a lead that quietly goes to a competitor instead.'],
+  [LucideClock, 'Follow-up that arrives too late', 'By the time someone gets back to a lead, the moment of interest has already passed.'],
+  [LucidePuzzle, 'Customer context scattered everywhere', 'Call notes, CRM records, and support tickets live in different systems that never talk to each other.'],
+  [LucideEyeOff, 'No visibility into real conversations', "Leadership can't see what's actually being said on sales and service calls — only what gets typed up afterwards."],
+]
+
+const vipDemoTopics = [
+  [LucideMic, 'AI voice agents', 'Handling inbound enquiries around the clock, including after hours.'],
+  [LucideUserPlus, 'Lead qualification', 'Automated, consistent qualification from the moment a conversation starts.'],
+  [LucideRoute, 'Intelligent routing & handover', 'Calls reach the right person with full context, every time.'],
+  [LucideClipboardList, 'Call summaries & scoring', 'AI-generated summaries, scoring, and follow-up actions after every call.'],
+  [LucideLink2, 'Zoho, HubSpot & Zendesk integrations', 'Conversations synced automatically into the systems your team already uses.'],
+  [LucideEye, 'Conversation visibility', 'Real oversight across sales and service conversations, not just what gets typed up.'],
+]
+
+const vipWhyAttend = [
+  [LucideMonitorPlay, 'A live demonstration', 'See AI voice agents and call intelligence working in real time, not a slide deck.'],
+  [LucideHandshake, 'Direct access to Rehan', 'Ask Rehan Wickremeratne, Senior Partner Account Manager at Aircall APAC, about your own setup.'],
+  [LucideUsers, 'A focused room', 'Conversation with a small group of around 30 Auckland founders, executives, and business leaders.'],
+]
+
+function VipRsvpButton({ children, className = '' }) {
+  return (
+    <a
+      className={`button primary vip-btn ${className}`}
+      href={VIP_RSVP_URL}
+      target="_blank"
+      rel="noreferrer"
+      data-external
+    >
+      {children}
+    </a>
+  )
+}
+
+function VipHeader() {
+  return (
+    <header className="vip-header">
+      <div className="vip-header-inner">
+        <div className="vip-brand-lockup">
+          <img src={logoSrc} alt="AI Catlyst" className="vip-brand-logo" width="140" height="38" loading="eager" decoding="async" />
+          <span className="vip-brand-x" aria-hidden="true">×</span>
+          <img src={aircallLogoSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="120" height="34" loading="eager" decoding="async" />
+        </div>
+        <VipRsvpButton className="vip-btn-compact">Reserve my place</VipRsvpButton>
+      </div>
+    </header>
+  )
+}
+
+function VipWaveform() {
+  const bars = Array.from({ length: 28 }, (_, i) => i)
+  return (
+    <div className="vip-waveform-card" aria-hidden="true">
+      <div className="vip-waveform-label">
+        <span className="vip-live-dot" />
+        AI voice agent — live call
+      </div>
+      <div className="vip-waveform">
+        {bars.map((i) => (
+          <span key={i} className="vip-wave-bar" style={{ '--i': i }} />
+        ))}
+      </div>
+      <p className="vip-waveform-caption">Understanding intent, routing, and next-best-action — in real time.</p>
+    </div>
+  )
+}
+
+function VipHero() {
+  return (
+    <section className="vip-hero">
+      <div className="vip-hero-inner">
+        <div className="vip-hero-copy">
+          <p className="vip-eyebrow">By invitation only · Auckland CBD</p>
+          <h1 className="vip-h1">Stop Losing Deals to Missed Calls and Slow Follow-Up</h1>
+          <p className="vip-hero-sub">
+            Join AI Catlyst and Aircall for a live look at how AI voice agents and connected call intelligence help teams answer every enquiry, qualify leads instantly, and keep context between sales and service.
+          </p>
+          <p className="vip-event-name">The Modern RevOps &amp; Voice Intelligence VIP Evening</p>
+          <div className="vip-fact-strip">
+            <span className="vip-fact"><LucideCalendarDays className="icon" />Thursday, 15 October 2026</span>
+            <span className="vip-fact"><LucideClock className="icon" />6:00 – 8:00 PM NZDT</span>
+            <span className="vip-fact"><LucideMapPin className="icon" />The Fox, Auckland CBD</span>
+          </div>
+          <div className="vip-hero-actions">
+            <VipRsvpButton className="vip-btn-lg">
+              Reserve my place <LucideArrowRight className="icon" />
+            </VipRsvpButton>
+            <span className="vip-hero-note">Complimentary attendance · ~30 seats · opens the RSVP form</span>
+          </div>
+        </div>
+        <VipWaveform />
+      </div>
+    </section>
+  )
+}
+
+function VipProblem() {
+  return (
+    <section className="vip-section vip-problem">
+      <div className="vip-section-inner">
+        <p className="vip-eyebrow">The gap</p>
+        <h2 className="vip-h2">The conversations you're already having — just not captured</h2>
+        <div className="vip-grid vip-problem-grid">
+          {vipProblems.map(([IconComp, title, text]) => (
+            <div className="vip-card vip-problem-card" key={title}>
+              <i className="vip-icon-badge"><IconComp className="icon" /></i>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VipDemo() {
+  return (
+    <section className="vip-section vip-demo">
+      <div className="vip-section-inner">
+        <p className="vip-eyebrow">The demonstration</p>
+        <h2 className="vip-h2">What Rehan will show, live</h2>
+        <p className="vip-section-sub">Rehan Wickremeratne, Senior Partner Account Manager at Aircall APAC, will walk through these live on the night. These are demonstration topics, not guaranteed outcomes for every business.</p>
+        <div className="vip-grid vip-demo-grid">
+          {vipDemoTopics.map(([IconComp, title, text]) => (
+            <div className="vip-card vip-demo-card" key={title}>
+              <i className="vip-icon-badge"><IconComp className="icon" /></i>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <VipRsvpButton className="vip-btn-lg">Reserve my place</VipRsvpButton>
+      </div>
+    </section>
+  )
+}
+
+function VipWhyAttend() {
+  return (
+    <section className="vip-section vip-why">
+      <div className="vip-section-inner">
+        <p className="vip-eyebrow">Why attend in person</p>
+        <h2 className="vip-h2">A practical evening, not a conference</h2>
+        <div className="vip-grid vip-why-grid">
+          {vipWhyAttend.map(([IconComp, title, text]) => (
+            <div className="vip-card vip-why-card" key={title}>
+              <i className="vip-icon-badge"><IconComp className="icon" /></i>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VipEventDetails() {
+  return (
+    <section className="vip-section vip-details">
+      <div className="vip-section-inner">
+        <div className="vip-details-card">
+          <div className="vip-details-date">
+            <span className="vip-details-month">Oct</span>
+            <span className="vip-details-day">15</span>
+            <span className="vip-details-dow">Thu</span>
+          </div>
+          <div className="vip-details-body">
+            <h3>The Modern RevOps &amp; Voice Intelligence VIP Evening</h3>
+            <ul className="vip-details-list">
+              <li><LucideCalendarDays className="icon" />Thursday, 15 October 2026</li>
+              <li><LucideClock className="icon" />6:00 – 8:00 PM NZDT</li>
+              <li><LucideMapPin className="icon" />The Churchill Room, The Fox — 85–87 Customs Street West, Auckland CBD</li>
+              <li><LucideWine className="icon" />Complimentary drinks &amp; canapés</li>
+              <li><LucideUsers className="icon" />An intimate evening for around 30 founders, executives, and business leaders</li>
+            </ul>
+            <p className="vip-details-host">Hosted by AI Catlyst in partnership with Aircall</p>
+            <VipRsvpButton className="vip-btn-lg">Reserve my place</VipRsvpButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VipClosingCta() {
+  return (
+    <section className="vip-section vip-closing">
+      <div className="vip-section-inner vip-closing-inner">
+        <h2 className="vip-h2">Join us for The Modern RevOps &amp; Voice Intelligence VIP Evening</h2>
+        <p>Thursday, 15 October 2026 · 6:00–8:00 PM NZDT · The Churchill Room, The Fox, Auckland CBD. Complimentary attendance, drinks, and canapés.</p>
+        <VipRsvpButton className="vip-btn-lg">
+          Reserve my place <LucideArrowRight className="icon" />
+        </VipRsvpButton>
+        <p className="vip-hero-note">RSVP opens the registration form — submitting it is what confirms your place.</p>
+      </div>
+    </section>
+  )
+}
+
+function VipFooter() {
+  return (
+    <footer className="vip-footer">
+      <div className="vip-footer-inner">
+        <div className="vip-brand-lockup">
+          <img src={logoSrc} alt="AI Catlyst" className="vip-brand-logo" width="120" height="33" loading="lazy" decoding="async" />
+          <span className="vip-brand-x" aria-hidden="true">×</span>
+          <img src={aircallLogoSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="104" height="30" loading="lazy" decoding="async" />
+        </div>
+        <p>Hosted by AI Catlyst in partnership with Aircall · Auckland, New Zealand</p>
+        <p className="vip-footer-contact">Questions about the evening? <a href="mailto:aicsupport1@aicatlyst.com">aicsupport1@aicatlyst.com</a></p>
+      </div>
+    </footer>
+  )
+}
+
+function VipEveningPage() {
+  return (
+    <>
+      <VipHeader />
+      <main className="vip-main">
+        <VipHero />
+        <VipProblem />
+        <VipDemo />
+        <VipWhyAttend />
+        <VipEventDetails />
+        <VipClosingCta />
+      </main>
+      <VipFooter />
+    </>
   )
 }
 
