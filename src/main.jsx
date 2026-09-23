@@ -18,20 +18,6 @@ import {
   Quote as LucideQuote,
   Phone as LucidePhone,
   MapPin as LucideMapPin,
-  PhoneMissed as LucidePhoneMissed,
-  Clock as LucideClock,
-  Puzzle as LucidePuzzle,
-  EyeOff as LucideEyeOff,
-  Mic as LucideMic,
-  Route as LucideRoute,
-  ClipboardList as LucideClipboardList,
-  Link2 as LucideLink2,
-  Eye as LucideEye,
-  Users as LucideUsers,
-  Handshake as LucideHandshake,
-  CalendarDays as LucideCalendarDays,
-  ArrowRight as LucideArrowRight,
-  Wine as LucideWine,
 } from 'lucide-react'
 import './styles.css'
 
@@ -47,6 +33,7 @@ const contactImageSrc = assetPath('contact-image.webp')
 const strategyImageSrc = assetPath('strategy-image.webp')
 const esaveaiLogoSrc = assetPath('esaveai-logo.webp')
 const aircallLogoSrc = assetPath('aircall-logo.svg')
+const aircallLogoWhiteSrc = assetPath('aircall-logo-white.svg')
 const arrivoLogoSrc = assetPath('arrivo-logo.svg')
 const raechalaiLogoSrc = assetPath('raechalai-logo.webp')
 
@@ -1250,59 +1237,52 @@ function InquiryModal({ open, initialSolution, onClose }) {
 }
 
 // ---------------------------------------------------------------------------
-// VIP event landing page — standalone, unlisted (see meta['vip-evening'] and
+// VIP event landing page, standalone and unlisted (see meta['vip-evening'] and
 // the App() route branch for how it's kept out of nav/sitemap/search).
-// Branded Aircall x AI Catlyst (Aircall leads the lockup); built around the
-// event's genuine exclusivity — a closed, decision-maker-only guest list —
-// and the networking value of the room, not just the product demo.
+// Branded Aircall x AI Catlyst (Aircall leads the lockup). Written and styled
+// to read as an actual invitation: the event name is the centrepiece, the
+// language is formal rather than marketing copy, and the layout is a quiet
+// dark editorial page (hairline rules, a serif voice, no icon-badge grids)
+// rather than a stack of SaaS feature cards.
 // ---------------------------------------------------------------------------
 
 const VIP_RSVP_URL = 'https://forms.zohopublic.com.au/aicsupport1aica1/form/TheModernRevOpsVoiceIntelligenceVIPEvening/formperma/xNioetQGv1R0l2-Ggc8smiQFh8tyK5th-HpfhnLnenI'
 
-const vipTitles = ['Founders & CEOs', 'Managing Directors', 'Heads of Sales', 'Heads of Customer Service']
+const vipAudience = 'Founders and chief executives, managing directors, and heads of sales and customer service.'
 
 const vipProblems = [
-  [LucidePhoneMissed, 'Missed calls, missed revenue', 'Every unanswered enquiry is a lead that quietly goes to a competitor instead.'],
-  [LucideClock, 'Follow-up that arrives too late', 'By the time someone gets back to a lead, the moment of interest has already passed.'],
-  [LucidePuzzle, 'Customer context scattered everywhere', 'Call notes, CRM records, and support tickets live in different systems that never talk to each other.'],
-  [LucideEyeOff, 'No visibility into real conversations', "Leadership can't see what's actually being said on sales and service calls — only what gets typed up afterwards."],
+  ['Missed calls, missed revenue', 'Every unanswered enquiry is a lead that quietly goes to a competitor instead.'],
+  ['Follow up that arrives too late', 'By the time someone gets back to a lead, the moment of interest has already passed.'],
+  ['Customer context scattered everywhere', 'Call notes, CRM records and support tickets live in different systems that never talk to each other.'],
+  ['No visibility into real conversations', 'Leadership cannot see what is actually being said on sales and service calls, only what gets typed up afterwards.'],
 ]
 
 const vipDemoTopics = [
-  [LucideMic, 'AI voice agents', 'Handling inbound enquiries around the clock, including after hours.'],
-  [LucideUserPlus, 'Lead qualification', 'Automated, consistent qualification from the moment a conversation starts.'],
-  [LucideRoute, 'Intelligent routing & handover', 'Calls reach the right person with full context, every time.'],
-  [LucideClipboardList, 'Call summaries & scoring', 'AI-generated summaries, scoring, and follow-up actions after every call.'],
-  [LucideLink2, 'Zoho, HubSpot & Zendesk integrations', 'Conversations synced automatically into the systems your team already uses.'],
-  [LucideEye, 'Conversation visibility', 'Real oversight across sales and service conversations, not just what gets typed up.'],
+  ['AI voice agents', 'Handling inbound enquiries around the clock, including after hours.'],
+  ['Lead qualification', 'Automated, consistent qualification from the moment a conversation starts.'],
+  ['Intelligent routing and handover', 'Calls reach the right person with full context, every time.'],
+  ['Call summaries and scoring', 'AI generated summaries, scoring and follow up actions after every call.'],
+  ['Zoho, HubSpot and Zendesk integrations', 'Conversations synced automatically into the systems your team already uses.'],
+  ['Conversation visibility', 'Real oversight across sales and service conversations, not just what gets typed up.'],
 ]
 
-const vipNetworking = [
-  [LucideUsers, 'A curated guest list', "Every attendee is personally invited — founders, CEOs, and sales or service leaders from across Auckland. Not a trade-show crowd."],
-  [LucideWine, 'Time built in to talk', 'Complimentary drinks and canapés either side of the demonstration, so the conversation has room to continue.'],
-  [LucideHandshake, 'Direct access to the team', 'Talk directly with Rehan Wickremeratne and the Aircall and AI Catlyst team — not a sales queue.'],
-]
-
+// Every CTA on the page scrolls to the embedded form at #rsvp rather than
+// opening a new tab. That is deliberate: a funnel page keeps the visitor on
+// one continuous page through to conversion instead of handing them off.
 function VipRsvpButton({ children, className = '' }) {
   return (
-    <a
-      className={`button primary vip-btn ${className}`}
-      href={VIP_RSVP_URL}
-      target="_blank"
-      rel="noreferrer"
-      data-external
-    >
+    <a className={`button primary vip-btn ${className}`} href="#rsvp">
       {children}
     </a>
   )
 }
 
-function VipBrandLockup({ size = 'default' }) {
+function VipBrandLockup() {
   return (
-    <div className={`vip-brand-lockup ${size === 'small' ? 'vip-brand-lockup-sm' : ''}`}>
-      <img src={aircallLogoSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="120" height="34" loading="eager" decoding="async" />
+    <div className="vip-brand-lockup">
+      <img src={aircallLogoWhiteSrc} alt="Aircall" className="vip-brand-logo vip-brand-logo-aircall" width="100" height="28" loading="eager" decoding="async" />
       <span className="vip-brand-x" aria-hidden="true">×</span>
-      <img src={logoSrc} alt="AI Catlyst" className="vip-brand-logo" width="140" height="38" loading="eager" decoding="async" />
+      <img src={logoSrc} alt="AI Catlyst" className="vip-brand-logo" width="116" height="32" loading="eager" decoding="async" />
     </div>
   )
 }
@@ -1311,28 +1291,21 @@ function VipHeader() {
   return (
     <header className="vip-header">
       <div className="vip-header-inner">
-        <VipBrandLockup size="small" />
-        <VipRsvpButton className="vip-btn-compact">Reserve my place</VipRsvpButton>
+        <VipBrandLockup />
+        <VipRsvpButton className="vip-btn-compact vip-btn-ghost">RSVP</VipRsvpButton>
       </div>
     </header>
   )
 }
 
-function VipWaveform() {
-  const bars = Array.from({ length: 28 }, (_, i) => i)
+function VipOrnament() {
+  const bars = Array.from({ length: 9 }, (_, i) => i)
   return (
-    <div className="vip-waveform-card" aria-hidden="true">
-      <div className="vip-waveform-label">
-        <span className="vip-live-dot" />
-        AI voice agent — live call
-      </div>
-      <div className="vip-waveform">
-        {bars.map((i) => (
-          <span key={i} className="vip-wave-bar" style={{ '--i': i }} />
-        ))}
-      </div>
-      <p className="vip-waveform-caption">Understanding intent, routing, and next-best-action — in real time.</p>
-    </div>
+    <span className="vip-ornament" aria-hidden="true">
+      {bars.map((i) => (
+        <i key={i} style={{ '--i': i }} />
+      ))}
+    </span>
   )
 }
 
@@ -1340,33 +1313,34 @@ function VipHero() {
   return (
     <section className="vip-hero">
       <div className="vip-hero-inner">
-        <div className="vip-hero-copy">
-          <p className="vip-badge">By Invitation Only</p>
-          <h1 className="vip-h1">Stop Losing Deals to Missed Calls and Slow Follow-Up</h1>
-          <p className="vip-hero-sub">
-            Join Aircall and AI Catlyst for a private evening on how AI voice agents and connected call intelligence help teams answer every enquiry, qualify leads instantly, and keep context between sales and service.
-          </p>
-          <p className="vip-event-name">The Modern RevOps &amp; Voice Intelligence VIP Evening</p>
-          <div className="vip-fact-strip">
-            <span className="vip-fact"><LucideCalendarDays className="icon" />Thursday, 15 October 2026</span>
-            <span className="vip-fact"><LucideClock className="icon" />6:00 – 8:00 PM NZDT</span>
-            <span className="vip-fact"><LucideMapPin className="icon" />The Fox, Auckland CBD</span>
+        <p className="vip-kicker">Aircall and AI Catlyst</p>
+        <p className="vip-preline">You are invited to</p>
+        <h1 className="vip-h1">The Modern RevOps &amp; Voice Intelligence VIP Evening</h1>
+        <VipOrnament />
+        <p className="vip-hero-sub">
+          A private evening on how AI voice agents and connected call intelligence are changing the way sales and service teams work.
+        </p>
+        <p className="vip-audience">
+          <span>Who this is for</span>
+          {vipAudience}
+        </p>
+        <div className="vip-detail-block">
+          <div className="vip-detail-row">
+            <span className="vip-detail-label">Date</span>
+            <span>Thursday, 15 October 2026</span>
           </div>
-          <div className="vip-hero-actions">
-            <VipRsvpButton className="vip-btn-lg">
-              Reserve my place <LucideArrowRight className="icon" />
-            </VipRsvpButton>
-            <span className="vip-hero-note">Complimentary attendance · ~30 seats · opens the RSVP form</span>
+          <div className="vip-detail-row">
+            <span className="vip-detail-label">Time</span>
+            <span>6 until 8 in the evening, NZDT</span>
+          </div>
+          <div className="vip-detail-row">
+            <span className="vip-detail-label">Venue</span>
+            <span>The Churchill Room, The Fox, Auckland CBD</span>
           </div>
         </div>
-        <VipWaveform />
-      </div>
-      <div className="vip-titles-strip">
-        <span className="vip-titles-label">Reserved for decision-makers</span>
-        <div className="vip-titles-list">
-          {vipTitles.map((title) => (
-            <span className="vip-title-chip" key={title}>{title}</span>
-          ))}
+        <div className="vip-hero-actions">
+          <VipRsvpButton className="vip-btn-lg">Reserve Your Place</VipRsvpButton>
+          <span className="vip-hero-note">By invitation only. Attendance, drinks and canapés are complimentary.</span>
         </div>
       </div>
     </section>
@@ -1378,18 +1352,23 @@ function VipNetworking() {
     <section className="vip-section vip-networking">
       <div className="vip-section-inner">
         <p className="vip-eyebrow">The room</p>
-        <h2 className="vip-h2 vip-h2-serif">An evening built for the conversations that matter</h2>
+        <p className="vip-statement">A small, closed gathering. Not a trade show.</p>
         <p className="vip-section-sub">
-          Thirty seats, not three hundred. Every person in the room is a founder, executive, or sales and service leader working through the same problems you are — which makes the conversation over drinks just as valuable as the demonstration itself.
+          Every guest is personally invited, so the conversation over drinks is often just as valuable as the demonstration itself.
         </p>
-        <div className="vip-grid vip-networking-grid">
-          {vipNetworking.map(([IconComp, title, text]) => (
-            <div className="vip-card vip-networking-card" key={title}>
-              <i className="vip-icon-badge vip-icon-badge-light"><IconComp className="icon" /></i>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
-          ))}
+        <div className="vip-inline-list">
+          <div>
+            <h3>A curated guest list</h3>
+            <p>Every attendee is a founder, executive, or sales and service leader from across Auckland.</p>
+          </div>
+          <div>
+            <h3>Time set aside to talk</h3>
+            <p>Drinks and canapés either side of the demonstration, so the conversation has room to continue.</p>
+          </div>
+          <div>
+            <h3>Direct access</h3>
+            <p>Talk with Rehan Wickremeratne and the Aircall and AI Catlyst team.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1401,16 +1380,18 @@ function VipProblem() {
     <section className="vip-section vip-problem">
       <div className="vip-section-inner">
         <p className="vip-eyebrow">The gap</p>
-        <h2 className="vip-h2">The conversations you're already having — just not captured</h2>
-        <div className="vip-grid vip-problem-grid">
-          {vipProblems.map(([IconComp, title, text]) => (
-            <div className="vip-card vip-problem-card" key={title}>
-              <i className="vip-icon-badge"><IconComp className="icon" /></i>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
+        <h2 className="vip-h2">Conversations you are already having, just not captured</h2>
+        <ul className="vip-list">
+          {vipProblems.map(([title, text], index) => (
+            <li className="vip-list-item" key={title}>
+              <span className="vip-list-index">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )
@@ -1422,19 +1403,19 @@ function VipDemo() {
       <div className="vip-section-inner">
         <p className="vip-eyebrow">The demonstration</p>
         <h2 className="vip-h2">What Rehan will show, live</h2>
-        <p className="vip-section-sub">Rehan Wickremeratne, Senior Partner Account Manager at Aircall APAC, will walk through these live on the night. These are demonstration topics, not guaranteed outcomes for every business.</p>
-        <div className="vip-grid vip-demo-grid">
-          {vipDemoTopics.map(([IconComp, title, text]) => (
-            <div className="vip-card vip-demo-card" key={title}>
-              <i className="vip-icon-badge"><IconComp className="icon" /></i>
+        <p className="vip-section-sub">Rehan Wickremeratne, Senior Partner Account Manager at Aircall APAC, will walk through these live on the night. These are topics for demonstration, not guaranteed outcomes for every business.</p>
+        <ul className="vip-list vip-list-2col">
+          {vipDemoTopics.map(([title, text], index) => (
+            <li className="vip-list-item" key={title}>
+              <span className="vip-list-index">{String(index + 1).padStart(2, '0')}</span>
               <div>
                 <h3>{title}</h3>
                 <p>{text}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
-        <VipRsvpButton className="vip-btn-lg">Reserve my place</VipRsvpButton>
+        </ul>
+        <VipRsvpButton className="vip-btn-lg">Reserve Your Place</VipRsvpButton>
       </div>
     </section>
   )
@@ -1453,14 +1434,14 @@ function VipEventDetails() {
           <div className="vip-details-body">
             <h3>The Modern RevOps &amp; Voice Intelligence VIP Evening</h3>
             <ul className="vip-details-list">
-              <li><LucideCalendarDays className="icon" />Thursday, 15 October 2026</li>
-              <li><LucideClock className="icon" />6:00 – 8:00 PM NZDT</li>
-              <li><LucideMapPin className="icon" />The Churchill Room, The Fox — 85–87 Customs Street West, Auckland CBD</li>
-              <li><LucideWine className="icon" />Complimentary drinks &amp; canapés</li>
-              <li><LucideUsers className="icon" />An intimate evening for around 30 founders, executives, and business leaders</li>
+              <li><span className="vip-detail-label">Date</span>Thursday, 15 October 2026</li>
+              <li><span className="vip-detail-label">Time</span>6 until 8 in the evening, NZDT</li>
+              <li><span className="vip-detail-label">Venue</span>The Churchill Room, The Fox, 85 to 87 Customs Street West, Auckland CBD</li>
+              <li><span className="vip-detail-label">Guests</span>An intimate group of around 30</li>
+              <li><span className="vip-detail-label">Includes</span>Complimentary drinks and canapés</li>
             </ul>
             <p className="vip-details-host">Hosted by AI Catlyst in partnership with Aircall</p>
-            <VipRsvpButton className="vip-btn-lg">Reserve my place</VipRsvpButton>
+            <VipRsvpButton className="vip-btn-lg">Reserve Your Place</VipRsvpButton>
           </div>
         </div>
       </div>
@@ -1470,15 +1451,23 @@ function VipEventDetails() {
 
 function VipClosingCta() {
   return (
-    <section className="vip-section vip-closing">
+    <section className="vip-section vip-closing" id="rsvp">
       <div className="vip-section-inner vip-closing-inner">
-        <p className="vip-badge">By Invitation Only</p>
-        <h2 className="vip-h2 vip-h2-serif vip-h2-light">Join us for The Modern RevOps &amp; Voice Intelligence VIP Evening</h2>
-        <p>Thursday, 15 October 2026 · 6:00–8:00 PM NZDT · The Churchill Room, The Fox, Auckland CBD. Complimentary attendance, drinks, and canapés.</p>
-        <VipRsvpButton className="vip-btn-lg vip-btn-light">
-          Reserve my place <LucideArrowRight className="icon" />
-        </VipRsvpButton>
-        <p className="vip-hero-note vip-hero-note-light">RSVP opens the registration form — submitting it is what confirms your place.</p>
+        <p className="vip-preline">You are invited to</p>
+        <h2 className="vip-h2 vip-h2-serif vip-h2-light">The Modern RevOps &amp; Voice Intelligence VIP Evening</h2>
+        <VipOrnament />
+        <p>Thursday, 15 October 2026. The Churchill Room, The Fox, Auckland CBD.</p>
+        <div className="vip-rsvp-frame">
+          <iframe
+            src={VIP_RSVP_URL}
+            title="RSVP form: The Modern RevOps & Voice Intelligence VIP Evening"
+            loading="lazy"
+          />
+        </div>
+        <p className="vip-hero-note vip-hero-note-light">
+          Submitting the form above confirms your place. Trouble loading it?{' '}
+          <a href={VIP_RSVP_URL} target="_blank" rel="noreferrer" data-external>Open it in a new tab</a>.
+        </p>
       </div>
     </section>
   )
@@ -1488,8 +1477,8 @@ function VipFooter() {
   return (
     <footer className="vip-footer">
       <div className="vip-footer-inner">
-        <VipBrandLockup size="small" />
-        <p>Hosted by AI Catlyst in partnership with Aircall · Auckland, New Zealand</p>
+        <VipBrandLockup />
+        <p>Hosted by AI Catlyst in partnership with Aircall. Auckland, New Zealand.</p>
         <p className="vip-footer-contact">Questions about the evening? <a href="mailto:aicsupport1@aicatlyst.com">aicsupport1@aicatlyst.com</a></p>
       </div>
     </footer>
@@ -1509,9 +1498,9 @@ function VipStickyBar() {
       <div className="vip-sticky-inner">
         <span className="vip-sticky-text">
           <strong>The Modern RevOps &amp; Voice Intelligence VIP Evening</strong>
-          <span>Thu 15 Oct · The Fox, Auckland CBD</span>
+          <span>Thursday, 15 October, The Fox, Auckland CBD</span>
         </span>
-        <VipRsvpButton className="vip-btn-compact vip-btn-accent">Reserve my place</VipRsvpButton>
+        <VipRsvpButton className="vip-btn-compact vip-btn-accent">Reserve Your Place</VipRsvpButton>
       </div>
     </div>
   )
