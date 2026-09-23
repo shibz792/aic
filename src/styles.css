@@ -3136,22 +3136,23 @@ h3 {
 /* =========================================================================
    VIP event landing page — standalone, unlisted route (see main.jsx).
    Its own navy/violet/green identity, distinct from the rest of the site,
-   built for a single co-branded AI Catlyst × Aircall evening.
+   built for a single co-branded Aircall x AI Catlyst evening. Art-directed
+   for exclusivity: a dark, invitation-card hero and close, a dedicated
+   networking pillar, and a persistent conversion bar.
    ========================================================================= */
 
 .vip-shell {
   --vip-navy: #16224d;
-  --vip-navy-deep: #0d1533;
+  --vip-navy-deep: #0a1129;
   --vip-violet: #8a6fb8;
+  --vip-violet-light: #b8a3dd;
   --vip-green: #00b388;
   --vip-green-dark: #00966f;
   --vip-bg: #f6f7fb;
   --vip-line: rgba(22, 34, 77, 0.1);
+  --font-serif: 'Fraunces', var(--font-display);
   min-height: 100vh;
-  background:
-    radial-gradient(60rem 34rem at 88% -8%, rgba(0, 179, 136, 0.1), transparent 60%),
-    radial-gradient(52rem 30rem at -6% 14%, rgba(138, 111, 184, 0.14), transparent 62%),
-    var(--vip-bg);
+  background: var(--vip-bg);
   color: var(--body);
 }
 
@@ -3169,14 +3170,44 @@ h3 {
   color: var(--vip-green-dark);
 }
 
-.vip-h1 {
-  margin: 0 0 20px;
-  font-family: var(--font-display);
-  font-size: clamp(32px, 4vw, 46px);
+.vip-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 28px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  color: var(--vip-navy);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.vip-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--vip-green);
+  box-shadow: 0 0 7px 2px rgba(0, 179, 136, 0.75);
+}
+
+.vip-h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 22px;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.4vw, 52px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #fff;
   text-wrap: balance;
 }
 
@@ -3188,6 +3219,17 @@ h3 {
   line-height: 1.16;
   color: var(--vip-navy);
   text-wrap: balance;
+}
+
+.vip-h2-serif {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.vip-h2-light {
+  color: #fff;
 }
 
 .vip-section-sub {
@@ -3228,18 +3270,18 @@ h3 {
 
 .vip-brand-logo {
   display: block;
-  height: 30px;
+  height: 27px;
   width: auto;
   object-fit: contain;
 }
 
 .vip-brand-logo-aircall {
-  height: 26px;
+  height: 23px;
 }
 
 .vip-brand-x {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 16px;
   color: var(--muted);
 }
 
@@ -3260,6 +3302,25 @@ h3 {
   background: var(--vip-navy-deep);
 }
 
+.button.vip-btn-light {
+  background: #fff;
+  color: var(--vip-navy);
+}
+
+.button.vip-btn-light:hover {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.button.vip-btn-accent {
+  background: var(--vip-green);
+  color: #06231b;
+}
+
+.button.vip-btn-accent:hover {
+  background: var(--vip-green-dark);
+  color: #fff;
+}
+
 .vip-btn-lg {
   min-height: 56px;
   padding-inline: 30px;
@@ -3271,38 +3332,77 @@ h3 {
   height: 17px;
 }
 
-/* Hero */
+/* Hero — dark, invitation-card treatment */
 
 .vip-hero {
-  padding: 56px 0 72px;
+  position: relative;
+  padding-top: 64px;
+  background: linear-gradient(180deg, var(--vip-navy-deep) 0%, var(--vip-navy) 58%, var(--vip-navy) 100%);
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.vip-hero::before,
+.vip-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.vip-hero::before {
+  top: -14%;
+  right: -10%;
+  width: 46%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(138, 111, 184, 0.38), transparent 70%);
+}
+
+.vip-hero::after {
+  bottom: -10%;
+  left: -10%;
+  width: 38%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(0, 179, 136, 0.3), transparent 70%);
 }
 
 .vip-hero-inner {
+  position: relative;
+  z-index: 1;
   width: min(100% - 40px, 1180px);
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.85fr);
   gap: clamp(32px, 5vw, 64px);
   align-items: center;
+  padding-bottom: 56px;
 }
 
 .vip-hero-sub {
+  position: relative;
+  z-index: 1;
   max-width: 52ch;
   margin: 0 0 22px;
   font-size: 17px;
   line-height: 1.65;
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .vip-event-name {
+  position: relative;
+  z-index: 1;
   margin: 0 0 26px;
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-style: italic;
-  font-size: 16px;
-  color: var(--vip-violet);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--vip-violet-light);
 }
 
 .vip-fact-strip {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -3315,21 +3415,22 @@ h3 {
   gap: 8px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--vip-line);
-  box-shadow: var(--shadow-glass);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 13px;
   font-weight: 700;
-  color: var(--vip-navy);
+  color: #fff;
 }
 
 .vip-fact .icon {
   width: 15px;
   height: 15px;
-  color: var(--vip-green-dark);
+  color: var(--vip-green);
 }
 
 .vip-hero-actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -3341,14 +3442,62 @@ h3 {
   color: var(--muted);
 }
 
-/* Waveform visual */
+.vip-hero-note-light {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* Titles strip — decision-makers-only gate, still within the dark hero */
+
+.vip-titles-strip {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 40px, 1180px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  padding: 24px 0 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.vip-titles-label {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.vip-titles-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vip-title-chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Waveform visual — a glass "screen" set into the dark hero */
 
 .vip-waveform-card {
   position: relative;
   padding: 28px 26px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(165deg, var(--vip-navy) 0%, var(--vip-navy-deep) 100%);
-  box-shadow: var(--shadow-glass-lg);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 34px 70px -22px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
   overflow: hidden;
 }
 
@@ -3443,7 +3592,7 @@ h3 {
   margin-bottom: 36px;
 }
 
-.vip-why-grid {
+.vip-networking-grid {
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -3499,6 +3648,25 @@ h3 {
   width: 20px;
   height: 20px;
   color: var(--vip-green-dark);
+}
+
+.vip-icon-badge-light {
+  background: rgba(138, 111, 184, 0.14);
+  border-color: rgba(138, 111, 184, 0.3);
+}
+
+.vip-icon-badge-light .icon {
+  color: var(--vip-violet);
+}
+
+/* Networking — its own pillar, tinted apart from the plain white sections */
+
+.vip-networking {
+  background: linear-gradient(180deg, rgba(138, 111, 184, 0.07), rgba(138, 111, 184, 0.015));
+}
+
+.vip-networking-card {
+  background: rgba(255, 255, 255, 0.82);
 }
 
 /* Event details card */
@@ -3603,19 +3771,35 @@ h3 {
   color: var(--muted);
 }
 
-/* Closing */
+/* Closing — dark, mirrors the hero to bookend the page */
+
+.vip-closing {
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 0%, rgba(0, 179, 136, 0.2), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 100% 100%, rgba(138, 111, 184, 0.22), transparent 62%),
+    linear-gradient(180deg, var(--vip-navy) 0%, var(--vip-navy-deep) 100%);
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+}
 
 .vip-closing-inner {
+  position: relative;
+  z-index: 1;
   max-width: 640px;
   margin-inline: auto;
   text-align: center;
+}
+
+.vip-closing .vip-badge {
+  margin-inline: auto;
 }
 
 .vip-closing p {
   margin: 0 0 26px;
   font-size: 15px;
   line-height: 1.6;
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .vip-closing .vip-hero-note {
@@ -3626,7 +3810,7 @@ h3 {
 /* Footer */
 
 .vip-footer {
-  padding: 40px 0 56px;
+  padding: 40px 0 96px;
   border-top: 1px solid var(--vip-line);
   text-align: center;
 }
@@ -3651,6 +3835,57 @@ h3 {
   font-weight: 700;
 }
 
+/* Sticky conversion bar */
+
+.vip-sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  transform: translateY(100%);
+  transition: transform 0.32s var(--ease);
+  background: rgba(10, 17, 41, 0.94);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+}
+
+.vip-sticky-bar.is-visible {
+  transform: translateY(0);
+}
+
+.vip-sticky-inner {
+  width: min(100% - 32px, 1180px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.vip-sticky-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vip-sticky-text strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vip-sticky-text span {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 /* Motion */
 
 @keyframes vip-wave-bounce {
@@ -3666,11 +3901,12 @@ h3 {
 @media (max-width: 980px) {
   .vip-hero-inner {
     grid-template-columns: 1fr;
+    padding-bottom: 40px;
   }
 
   .vip-problem-grid,
   .vip-demo-grid,
-  .vip-why-grid {
+  .vip-networking-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -3705,16 +3941,22 @@ h3 {
   }
 
   .vip-brand-logo {
-    height: 24px;
+    height: 22px;
   }
 
   .vip-brand-logo-aircall {
-    height: 20px;
+    height: 19px;
+  }
+
+  .vip-titles-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .vip-problem-grid,
   .vip-demo-grid,
-  .vip-why-grid {
+  .vip-networking-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3724,6 +3966,10 @@ h3 {
 
   .vip-details-card {
     padding: 24px;
+  }
+
+  .vip-sticky-text span {
+    display: none;
   }
 }
 
@@ -3735,6 +3981,10 @@ h3 {
 
   .vip-live-dot {
     animation: none;
+  }
+
+  .vip-sticky-bar {
+    transition: none;
   }
 }
 
