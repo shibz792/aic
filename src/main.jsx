@@ -1320,11 +1320,7 @@ function VipHero() {
         </p>
         <div className="vip-audience">
           <span className="vip-audience-label">Who this is for</span>
-          <ul className="vip-audience-titles">
-            {vipAudienceTitles.map((title) => (
-              <li key={title}>{title}</li>
-            ))}
-          </ul>
+          <p className="vip-audience-titles">{vipAudienceTitles.join('  ·  ')}</p>
         </div>
         <div className="vip-detail-block">
           <div className="vip-detail-row">
