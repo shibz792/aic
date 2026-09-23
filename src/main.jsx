@@ -1249,7 +1249,7 @@ function InquiryModal({ open, initialSolution, onClose }) {
 
 const VIP_RSVP_URL = 'https://forms.zohopublic.com.au/aicsupport1aica1/form/TheModernRevOpsVoiceIntelligenceVIPEvening/formperma/xNioetQGv1R0l2-Ggc8smiQFh8tyK5th-HpfhnLnenI'
 
-const vipAudience = 'Founders and chief executives, managing directors, and heads of sales and customer service.'
+const vipAudienceTitles = ['Founders and chief executives', 'Managing directors', 'Heads of sales', 'Heads of customer service']
 
 const vipProblems = [
   ['Missed calls, missed revenue', 'Every unanswered enquiry is a lead that quietly goes to a competitor instead.'],
@@ -1318,10 +1318,14 @@ function VipHero() {
         <p className="vip-hero-sub">
           A private evening on how AI voice agents and connected call intelligence are changing the way sales and service teams work.
         </p>
-        <p className="vip-audience">
-          <span>Who this is for</span>
-          {vipAudience}
-        </p>
+        <div className="vip-audience">
+          <span className="vip-audience-label">Who this is for</span>
+          <ul className="vip-audience-titles">
+            {vipAudienceTitles.map((title) => (
+              <li key={title}>{title}</li>
+            ))}
+          </ul>
+        </div>
         <div className="vip-detail-block">
           <div className="vip-detail-row">
             <span className="vip-detail-label">Date</span>
