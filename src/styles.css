@@ -3488,6 +3488,15 @@ h3 {
   color: var(--vip-heading);
 }
 
+.vip-audience-title {
+  white-space: nowrap;
+}
+
+.vip-audience-sep {
+  color: var(--vip-muted);
+  font-weight: 400;
+}
+
 .vip-detail-block {
   display: inline-flex;
   flex-direction: column;
@@ -3654,12 +3663,14 @@ h3 {
 
 .vip-details-card {
   display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  padding: 34px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 44px 34px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--vip-line);
+  text-align: center;
 }
 
 .vip-details-date {
@@ -3708,8 +3719,16 @@ h3 {
   color: var(--vip-muted);
 }
 
+.vip-details-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .vip-details-body h3 {
   margin: 0 0 20px;
+  max-width: 32ch;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 21px;
@@ -3722,12 +3741,14 @@ h3 {
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 11px;
 }
 
 .vip-details-list li {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: 16px;
   font-size: 14px;
   line-height: 1.5;
@@ -3879,29 +3900,6 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .vip-details-card {
-    flex-direction: column;
-  }
-
-  .vip-details-date {
-    flex-direction: row;
-    width: 100%;
-    height: 40px;
-  }
-
-  .vip-details-month,
-  .vip-details-dow {
-    padding: 0 14px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-
-  .vip-details-day {
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-  }
 }
 
 @media (max-width: 640px) {

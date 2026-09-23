@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import emailjs from '@emailjs/browser'
 import {
@@ -1320,7 +1320,14 @@ function VipHero() {
         </p>
         <div className="vip-audience">
           <span className="vip-audience-label">Who this is for</span>
-          <p className="vip-audience-titles">{vipAudienceTitles.join('  ·  ')}</p>
+          <p className="vip-audience-titles">
+            {vipAudienceTitles.map((title, index) => (
+              <Fragment key={title}>
+                <span className="vip-audience-title">{title}</span>
+                {index < vipAudienceTitles.length - 1 && <span className="vip-audience-sep"> · </span>}
+              </Fragment>
+            ))}
+          </p>
         </div>
         <div className="vip-detail-block">
           <div className="vip-detail-row">
