@@ -3259,13 +3259,21 @@ h3 {
 }
 
 .vip-header-inner {
+  position: relative;
   width: min(100% - 40px, 1100px);
   margin-inline: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   padding-block: 16px;
+}
+
+.vip-header-inner > a.button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
 }
 
 .vip-brand-lockup {
@@ -3875,6 +3883,11 @@ h3 {
     height: 16px;
   }
 
+  .vip-header-inner > a.button {
+    padding-inline: 14px;
+    font-size: 11.5px;
+  }
+
   .vip-hero {
     padding: 64px 0 56px;
   }
@@ -3889,6 +3902,22 @@ h3 {
 
   .vip-sticky-text span {
     display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .vip-brand-lockup {
+    gap: 8px;
+  }
+
+  .vip-brand-x {
+    font-size: 12px;
+  }
+
+  .vip-header-inner > a.button {
+    padding-inline: 10px;
+    font-size: 10.5px;
+    min-height: 34px;
   }
 }
 
