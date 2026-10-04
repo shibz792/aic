@@ -27,9 +27,14 @@ const routes = [
   // Standalone, unlisted — not in nav, so it's reached by direct URL below
   // instead of a nav click.
   { path: '/vip-evening', out: 'vip-evening/index.html', navText: null },
+  // Alias of /vip-evening (identical rendered content — see getRoute() in
+  // main.jsx). Prerendered to its own vip-invitation/index.html so the
+  // directory has a real index file and LiteSpeed/Apache never falls back
+  // to a directory listing for it.
+  { path: '/vip-invitation', out: 'vip-invitation/index.html', navText: null },
   // RSVP confirmation page. Its path is fixed by the Zoho form's own
-  // post-submit redirect, not chosen by this app — see meta['vip-invitation/thank-you'].
-  { path: '/vip-invitation/thank-you', out: 'vip-invitation/thank-you/index.html', navText: null },
+  // post-submit redirect, not chosen by this app — see meta['vip-evening/thank-you'].
+  { path: '/vip-evening/thank-you', out: 'vip-evening/thank-you/index.html', navText: null },
 ]
 
 const MIME = {

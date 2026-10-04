@@ -90,11 +90,10 @@ const meta = {
     metaDescription: 'A private, invitation-only Auckland evening with Aircall and AI Catlyst: live AI voice agents and call intelligence, for founders, CEOs, and sales and service leaders. Thursday 15 October, The Fox, Auckland CBD.',
     robots: 'noindex, follow',
   },
-  // RSVP confirmation page. Its path is fixed by the Zoho form's configured
-  // post-submit redirect (https://www.aicatlyst.com/vip-invitation/thank-you),
-  // so it exists at this URL independently of where the invitation page
-  // itself lives. Standalone, unlisted, noindex — see App() and VipThankYouPage.
-  'vip-invitation/thank-you': {
+  // RSVP confirmation page. Its path must match the Zoho form's configured
+  // post-submit redirect (https://www.aicatlyst.com/vip-evening/thank-you).
+  // Standalone, unlisted, noindex — see App() and VipThankYouPage.
+  'vip-evening/thank-you': {
     pageTitle: "You're on the list | The Modern RevOps & Voice Intelligence VIP Evening",
     metaDescription: 'Your RSVP for the Modern RevOps & Voice Intelligence VIP Evening has been received.',
     robots: 'noindex',
@@ -150,6 +149,11 @@ function splitList(text) {
 function getRoute() {
   const slug = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'home'
   if (slug === 'platform') return 'strategy'
+  // /vip-invitation is an alias for the same event page as /vip-evening —
+  // both URLs render identical content (see prerender.mjs, which also
+  // prerenders /vip-invitation to its own static file), with /vip-evening
+  // as the canonical URL for SEO purposes.
+  if (slug === 'vip-invitation') return 'vip-evening'
   return meta[slug] ? slug : 'home'
 }
 
@@ -306,7 +310,7 @@ function App() {
     )
   }
 
-  if (route === 'vip-invitation/thank-you') {
+  if (route === 'vip-evening/thank-you') {
     return (
       <div className="site-shell vip-shell">
         <VipThankYouPage />
@@ -1549,9 +1553,9 @@ function VipEveningPage() {
   )
 }
 
-// RSVP confirmation page. Its URL (/vip-invitation/thank-you) is fixed by
-// the Zoho form's own post-submit redirect, configured as
-// https://www.aicatlyst.com/vip-invitation/thank-you?zf=1 — this page
+// RSVP confirmation page. Its URL (/vip-evening/thank-you) must match the
+// Zoho form's own post-submit redirect, configured as
+// https://www.aicatlyst.com/vip-evening/thank-you?zf=1 — this page
 // doesn't control that, it just has to exist at exactly that path.
 //
 // The Zoho form itself is opened in a new tab rather than embedded on this
