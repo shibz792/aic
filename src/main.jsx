@@ -90,6 +90,15 @@ const meta = {
     metaDescription: 'A private, invitation-only Auckland evening with Aircall and AI Catlyst: live AI voice agents and call intelligence, for founders, CEOs, and sales and service leaders. Thursday 15 October, The Fox, Auckland CBD.',
     robots: 'noindex, follow',
   },
+  // RSVP confirmation page. Its path is fixed by the Zoho form's configured
+  // post-submit redirect (https://www.aicatlyst.com/vip-invitation/thank-you),
+  // so it exists at this URL independently of where the invitation page
+  // itself lives. Standalone, unlisted, noindex — see App() and VipThankYouPage.
+  'vip-invitation/thank-you': {
+    pageTitle: "You're on the list | The Modern RevOps & Voice Intelligence VIP Evening",
+    metaDescription: 'Your RSVP for the Modern RevOps & Voice Intelligence VIP Evening has been received.',
+    robots: 'noindex',
+  },
 }
 
 const triad = [
@@ -268,6 +277,18 @@ function App() {
     document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description)
   }, [route, activeMeta])
 
+  // The base Meta Pixel script (index.html head) already fires the first
+  // PageView on initial page load. This only re-fires it on subsequent
+  // client-side route changes, so it isn't double-counted on mount.
+  const pixelMounted = useRef(false)
+  useEffect(() => {
+    if (!pixelMounted.current) {
+      pixelMounted.current = true
+      return
+    }
+    window.fbq?.('track', 'PageView')
+  }, [route])
+
   const openInquiry = (solution = '') => {
     setInitialInquirySolution(solution)
     setInquiryVersion((version) => version + 1)
@@ -281,6 +302,14 @@ function App() {
     return (
       <div className="site-shell vip-shell">
         <VipEveningPage />
+      </div>
+    )
+  }
+
+  if (route === 'vip-invitation/thank-you') {
+    return (
+      <div className="site-shell vip-shell">
+        <VipThankYouPage />
       </div>
     )
   }
@@ -1516,6 +1545,91 @@ function VipEveningPage() {
       </main>
       <VipFooter />
       <VipStickyBar />
+    </>
+  )
+}
+
+// RSVP confirmation page. Its URL (/vip-invitation/thank-you) is fixed by
+// the Zoho form's own post-submit redirect, configured as
+// https://www.aicatlyst.com/vip-invitation/thank-you?zf=1 — this page
+// doesn't control that, it just has to exist at exactly that path.
+//
+// The Zoho form itself is opened in a new tab rather than embedded on this
+// site (see VipRsvpButton), so in practice this page is never actually
+// loaded inside an iframe. The break-out below is kept anyway as a defensive
+// no-op in case the form is ever embedded in future — window.self will
+// simply equal window.top and nothing happens.
+//
+// Lead fires once per visit: only when the page is top-level, the Zoho
+// redirect's zf=1 param is present (so a bare/direct visit never fires it),
+// and a sessionStorage flag hasn't already been set this session. The flag
+// is set immediately after firing, and zf=1 is stripped from the URL via
+// history.replaceState, so neither a refresh nor a back-navigation can
+// trigger a second Lead event for the same visit.
+const VIP_LEAD_SESSION_FLAG = 'aic_vip_lead_fired'
+
+function VipThankYouPage() {
+  useEffect(() => {
+    try {
+      if (window.self !== window.top) {
+        window.top.location.replace(window.location.href)
+        return
+      }
+    } catch {
+      // Cross-origin access to window.top threw, so this definitely isn't
+      // an aicatlyst.com parent frame — nothing safe to do, render normally.
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('zf') !== '1') return
+
+    let alreadyFired = false
+    try {
+      alreadyFired = sessionStorage.getItem(VIP_LEAD_SESSION_FLAG) === '1'
+    } catch {
+      alreadyFired = false
+    }
+    if (alreadyFired) return
+
+    window.fbq?.('track', 'Lead',
+      { content_name: 'Aircall VIP Evening 15 Oct 2026', content_category: 'event_registration' },
+      { eventID: window.crypto?.randomUUID?.() || String(Date.now()) },
+    )
+
+    try {
+      sessionStorage.setItem(VIP_LEAD_SESSION_FLAG, '1')
+    } catch {
+      // If storage is unavailable, a refresh could in theory re-fire Lead —
+      // an acceptable edge case rather than something to build around.
+    }
+
+    params.delete('zf')
+    const query = params.toString()
+    window.history.replaceState({}, '', window.location.pathname + (query ? `?${query}` : '') + window.location.hash)
+  }, [])
+
+  return (
+    <>
+      <header className="vip-header">
+        <div className="vip-header-inner">
+          <VipBrandLockup />
+        </div>
+      </header>
+      <main className="vip-main">
+        <section className="vip-hero">
+          <div className="vip-hero-inner">
+            <h1 className="vip-h1">Thanks, your invitation request has been received.</h1>
+            <VipOrnament />
+            <p className="vip-hero-sub">
+              We will confirm your place by email. Thursday 15 October 2026, 6 until 8 PM, The Churchill Room, The Fox, Auckland CBD.
+            </p>
+            <div className="vip-hero-actions">
+              <a className="button vip-btn vip-btn-lg" href="/">Back to home</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <VipFooter />
     </>
   )
 }

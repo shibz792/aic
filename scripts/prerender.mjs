@@ -27,6 +27,9 @@ const routes = [
   // Standalone, unlisted — not in nav, so it's reached by direct URL below
   // instead of a nav click.
   { path: '/vip-evening', out: 'vip-evening/index.html', navText: null },
+  // RSVP confirmation page. Its path is fixed by the Zoho form's own
+  // post-submit redirect, not chosen by this app — see meta['vip-invitation/thank-you'].
+  { path: '/vip-invitation/thank-you', out: 'vip-invitation/thank-you/index.html', navText: null },
 ]
 
 const MIME = {
@@ -57,8 +60,22 @@ async function main() {
   const server = await startServer(distDir, port)
   const browser = await chromium.launch({ args: ['--no-sandbox'] })
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
+  // The Meta Pixel's own script (fbevents.js) throws
+  // "a.__fbeventsModules[e] is not a function" here because prerendering
+  // runs against 127.0.0.1, a domain Meta's pixel doesn't recognize — its
+  // automatic-configuration fetch for an unverified domain triggers this
+  // internal error in Facebook's code, not ours. It doesn't affect how any
+  // route actually renders (every route's content and <h1> are unaffected)
+  // and isn't expected on the real aicatlyst.com domain. Real app errors
+  // should still fail the build, so only this known third-party signature
+  // is filtered out.
+  const IGNORED_ERROR_PATTERNS = [/__fbeventsModules/]
   const errors = []
-  page.on('pageerror', (e) => errors.push(String(e)))
+  page.on('pageerror', (e) => {
+    const message = String(e)
+    if (IGNORED_ERROR_PATTERNS.some((pattern) => pattern.test(message))) return
+    errors.push(message)
+  })
 
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' })
 
