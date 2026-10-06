@@ -80,6 +80,14 @@ const meta = {
     text: 'Speak with our experts and find out how we can simplify your operations, reduce pressure, and support smarter growth.',
     cta: 'Talk to Our Experts',
   },
+  // Linked from the footer only, not the primary nav — standard placement
+  // for a legal page. Unlike the VIP routes below, this is a real public
+  // page: indexed, and included in sitemap.xml.
+  privacy: {
+    pageTitle: 'Privacy Policy | AI Catlyst',
+    metaDescription: 'How AI Catlyst collects, uses, and protects personal information, including the analytics, advertising, and form tools used on this site.',
+    robots: 'index, follow',
+  },
   // Standalone event landing page — reachable only via direct link, not part
   // of site navigation and not linked from any other page (see App(), where
   // this route skips the shared Header/Footer/InquiryModal entirely) and
@@ -327,6 +335,7 @@ function App() {
         {route === 'strategy' && <StrategyPage openInquiry={openInquiry} />}
         {route === 'solutions' && <SolutionsPage openInquiry={openInquiry} />}
         {route === 'contact' && <ContactPage openInquiry={openInquiry} />}
+        {route === 'privacy' && <PrivacyPage />}
       </main>
       <Footer openInquiry={openInquiry} />
       <InquiryModal key={inquiryVersion} open={inquiryOpen} initialSolution={initialInquirySolution} onClose={() => setInquiryOpen(false)} />
@@ -553,6 +562,116 @@ function ContactFaq() {
               </div>
             )
           })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Privacy policy content reflects what this site actually does — the
+// specific third-party tools wired up elsewhere in this file (EmailJS for
+// the contact/inquiry forms, Zoho for VIP event RSVPs, GA4 and the Meta
+// Pixel for analytics/advertising) — rather than generic boilerplate.
+function PrivacyPage() {
+  return (
+    <section className="section legal-page">
+      <div className="wrapper legal-wrapper">
+        <p className="legal-kicker">Legal</p>
+        <h1 className="legal-h1">Privacy Policy</h1>
+        <p className="legal-updated">Last updated 6 October 2026</p>
+
+        <div className="legal-body">
+          <p>
+            AI Catlyst Ltd (&ldquo;AI Catlyst&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) respects your privacy.
+            This policy explains what personal information we collect through this website, how we use it, and the choices
+            available to you, in line with the New Zealand Privacy Act 2020 and, for the Australian businesses we serve, the
+            Australian Privacy Principles.
+          </p>
+
+          <h2>1. Information we collect</h2>
+          <ul>
+            <li>
+              <strong>Contact and enquiry forms.</strong> When you use our contact form or the &ldquo;Talk to Our Experts&rdquo;
+              form, we collect your name, email address, the solutions you&rsquo;re interested in, and any message you send us.
+            </li>
+            <li>
+              <strong>Event RSVPs.</strong> If you register for an AI Catlyst event, your RSVP is submitted through a form
+              hosted by Zoho, a third-party form provider, which collects your name, email, company, and phone number on our
+              behalf. That submission is also governed by Zoho&rsquo;s own privacy practices.
+            </li>
+            <li>
+              <strong>Automatically collected information.</strong> When you visit our site, Google Analytics and the Meta
+              Pixel automatically collect technical information such as your general, IP-derived location, browser and
+              device type, pages viewed, and referring website, to help us understand site usage and measure the
+              effectiveness of our advertising.
+            </li>
+          </ul>
+
+          <h2>2. How we use your information</h2>
+          <ul>
+            <li>To respond to enquiries and provide the information, strategy sessions, or solutions you request.</li>
+            <li>To coordinate your attendance at events you register for.</li>
+            <li>To measure and improve the performance of our advertising, including on Meta and Google.</li>
+            <li>To understand how visitors use our site so we can improve it.</li>
+            <li>To communicate with you about AI Catlyst where you&rsquo;ve asked us to, or where we have a legitimate interest in doing so.</li>
+          </ul>
+
+          <h2>3. Cookies and tracking technologies</h2>
+          <p>Our site uses the following tracking technologies, which load automatically when you visit:</p>
+          <ul>
+            <li><strong>Google Analytics:</strong> standard web analytics, measuring site traffic and usage patterns.</li>
+            <li><strong>Meta Pixel:</strong> measures the performance of our advertising and helps us show relevant ads to people who have visited our site.</li>
+          </ul>
+          <p>
+            You can limit this tracking through your browser&rsquo;s cookie settings, Google&rsquo;s{' '}
+            <a href="https://adssettings.google.com" target="_blank" rel="noreferrer" data-external>Ads Settings</a>, Meta&rsquo;s{' '}
+            <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noreferrer" data-external>ad preferences</a>,
+            or a browser extension that blocks trackers.
+          </p>
+
+          <h2>4. Third parties we share information with</h2>
+          <p>
+            We don&rsquo;t sell your personal information. We share it only with the service providers who help us run our
+            business, and only to the extent needed for them to provide their service:
+          </p>
+          <ul>
+            <li>Google (Analytics)</li>
+            <li>Meta (advertising measurement)</li>
+            <li>EmailJS (delivers messages submitted through our contact and enquiry forms)</li>
+            <li>Zoho (hosts the RSVP forms for our events)</li>
+            <li>Vercel and Namecheap (our website hosting providers)</li>
+          </ul>
+          <p>We may also disclose information where required by law, to protect our rights, or in connection with a business transaction such as a merger or sale.</p>
+
+          <h2>5. Data retention</h2>
+          <p>We keep personal information only as long as reasonably necessary for the purposes described in this policy, or as required by law, after which we delete or anonymise it.</p>
+
+          <h2>6. Data security</h2>
+          <p>We take reasonable technical and organisational steps to protect the personal information we hold, but no method of transmission or storage is completely secure, and we can&rsquo;t guarantee absolute security.</p>
+
+          <h2>7. International transfers</h2>
+          <p>Some of the service providers listed above, including Google and Meta, store and process information on servers located outside New Zealand and Australia, including in the United States. By using our site, you consent to this transfer.</p>
+
+          <h2>8. Your rights</h2>
+          <p>
+            Under the New Zealand Privacy Act 2020, and the Australian Privacy Principles where applicable, you have the
+            right to ask us what personal information we hold about you, to request a correction, and to ask us to delete
+            it. To exercise any of these rights, contact us at{' '}
+            <a href="mailto:aicsupport1@aicatlyst.com">aicsupport1@aicatlyst.com</a>.
+          </p>
+
+          <h2>9. Children&rsquo;s privacy</h2>
+          <p>Our site is intended for business audiences and isn&rsquo;t directed at children. We don&rsquo;t knowingly collect personal information from children.</p>
+
+          <h2>10. Changes to this policy</h2>
+          <p>We may update this policy from time to time. The &ldquo;last updated&rdquo; date at the top of this page reflects the most recent changes.</p>
+
+          <h2>11. Contact us</h2>
+          <p>
+            If you have questions about this policy or how we handle your personal information, email us at{' '}
+            <a href="mailto:aicsupport1@aicatlyst.com">aicsupport1@aicatlyst.com</a> or write to us at 8 Harley Road,
+            Hauraki, Auckland 0622, New Zealand.
+          </p>
         </div>
       </div>
     </section>
@@ -1685,7 +1804,7 @@ function Footer({ openInquiry }) {
         </div>
       </div>
       <div className="wrapper footer-legal">
-        <small className="footer-legal-left">© 2026 AI Catlyst Ltd. All Rights Reserved.</small>
+        <small className="footer-legal-left">© 2026 AI Catlyst Ltd. All Rights Reserved. &middot; <a className="footer-legal-plain-link" href="/privacy/">Privacy Policy</a></small>
         <small className="footer-legal-center"><a className="footer-legal-brand-link" href="https://knightsmoveconsulting.com/" target="_blank" rel="noreferrer">A Knights Move Consulting Group Company</a></small>
         <small className="footer-legal-right">Powered by <a className="footer-legal-plain-link" href="https://levatahq.com" target="_blank" rel="noreferrer">Levata</a></small>
       </div>

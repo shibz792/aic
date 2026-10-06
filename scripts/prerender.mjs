@@ -24,6 +24,8 @@ const routes = [
   { path: '/strategy', out: 'strategy/index.html', navText: 'Strategy' },
   { path: '/solutions', out: 'solutions/index.html', navText: 'Solutions' },
   { path: '/contact', out: 'contact/index.html', navText: 'Contact' },
+  // Linked from the footer only, not the primary nav.
+  { path: '/privacy', out: 'privacy/index.html', navText: null },
   // Standalone, unlisted — not in nav, so it's reached by direct URL below
   // instead of a nav click.
   { path: '/vip-evening', out: 'vip-evening/index.html', navText: null },
